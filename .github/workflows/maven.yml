@@ -29,7 +29,4 @@ jobs:
         cache: maven
     
     - name: Build
-      run: mvn --batch-mode -DskipTests package
-
-    - name: Test
-      run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+      run: mvn --batch-mode package
