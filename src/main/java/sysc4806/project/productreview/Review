@@ -1,4 +1,6 @@
-cimport javax.persistence.*;
+package sysc4806.project.productreview;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
