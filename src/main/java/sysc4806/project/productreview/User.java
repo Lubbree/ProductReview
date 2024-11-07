@@ -49,7 +49,7 @@ public class User {
 
     private Collection<User> getFollowing() {
 
-        return this.following;//this needs to be fixed
+        return -1;
     }
 
     public void removeFollowing(User user) {
