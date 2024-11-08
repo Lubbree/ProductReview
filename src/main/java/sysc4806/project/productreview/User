@@ -41,14 +41,14 @@ public void setUserId(String userId) {
         this.reviews = reviews;
     }
 
-    public void addFollowing(User user) {
-        following.add(user);
-        user.getFollowing().add(this);
+    public void addFollowing(User customer) {
+        following.add(customer);
+        customer.getFollowing().add(this);
     }
 
-    public void removeFollowing(User user) {
-        following.remove(user);
-        user.getFollowing().remove(this);
+    public void removeFollowing(User customer) {
+        following.remove(customer);
+        customer.getFollowing().remove(this);
     }
 
     public void addReview(Review review) {
