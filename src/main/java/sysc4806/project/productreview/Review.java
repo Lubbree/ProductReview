@@ -12,7 +12,7 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "reviewer_id")
-    private User reviewer;
+    private Costumer reviewer;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -23,7 +23,7 @@ public class Review {
     private LocalDateTime reviewDate;
 
 
-    public void setReviewer(User reviewer) {
+    public void setReviewer(Costumer reviewer) {
         this.reviewer = reviewer;
     }
 
