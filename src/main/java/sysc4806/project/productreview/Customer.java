@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Costumer {
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class Costumer {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "following_id")
     )
-    private Set<Costumer> following = new HashSet<>();
+    private Set<Customer> following = new HashSet<>();
 
     @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews = new HashSet<>();
@@ -34,7 +34,7 @@ public class Costumer {
         this.name = name;
     }
 
-    public void setFollowing(Set<Costumer> following) {
+    public void setFollowing(Set<Customer> following) {
         this.following = following;
     }
 
@@ -42,19 +42,19 @@ public class Costumer {
         this.reviews = reviews;
     }
 
-    public void addFollowing(Costumer costumer) {
-        following.add(costumer);
-        costumer.getFollowing().add(this);
+    public void addFollowing(Customer customer) {
+        following.add(customer);
+        customer.getFollowing().add(this);
     }
 
-    private Collection<Costumer> getFollowing() {
+    private Collection<Customer> getFollowing() {
 
         return this.following;
     }
 
-    public void removeFollowing(Costumer costumer) {
-        following.remove(costumer);
-        costumer.getFollowing().remove(this);
+    public void removeFollowing(Customer customer) {
+        following.remove(customer);
+        customer.getFollowing().remove(this);
     }
 
     public void addReview(Review review) {
