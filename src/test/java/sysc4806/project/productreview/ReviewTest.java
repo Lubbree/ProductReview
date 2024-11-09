@@ -1,13 +1,9 @@
-package sysc4806.project.unit_testing;
+package sysc4806.project.productreview;
 
 
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
-import sysc4806.project.productreview.Customer;
-import sysc4806.project.productreview.Product;
-import sysc4806.project.productreview.Review;
 
 import java.time.LocalDateTime;
 
