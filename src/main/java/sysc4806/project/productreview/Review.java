@@ -51,4 +51,8 @@ public class Review {
     }
 
     public LocalDateTime getReviewDate() {return reviewDate;}
+
+    public Long getId() {return id;}
+
+    public void setId(Long id) {this.id = id;}
 }

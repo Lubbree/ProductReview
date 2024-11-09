@@ -25,9 +25,9 @@ public class Product {
         this.reviews = reviews;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setName(String name) {this.name = name;}
+
+    public void setId(Long id) { this.id = id;}
 
     public void addReview(Review review) {
         reviews.add(review);
@@ -49,7 +49,5 @@ public class Product {
         return category;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() {return id;}
 }
