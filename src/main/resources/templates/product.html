@@ -6,11 +6,16 @@
 </head>
 <body>
 
+  <a th:href="@{/home}">Back to Home</a>
   <h1>Product Details</h1>
 
   <ul>
     <li>Product Name: <span th:text="${product.get().getName()}"></span></li>
+    <li>Product Category: <span th:text="${product.get().getCategory()}"></span></li>
+    <li>Product Description: <span th:text="${product.get().getDescription()}"></span></li>
   </ul>
+
+  <h2>Reviews:</h2>
 
 </body>
 </html>
