@@ -30,6 +30,10 @@ public class Product {
         this.reviews = reviews;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void addReview(Review review) {
         reviews.add(review);
         review.setProduct(this);
@@ -44,9 +48,9 @@ public class Product {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public String getProductId() {return productId;}
+
+    public List<Review> getReviews() {return reviews;}
 
     public String getCategory() {
         return category;
