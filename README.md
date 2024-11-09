@@ -3,11 +3,10 @@
 This project is a Java-based application for managing product reviews, user-following relationships, and categorization of products. The application uses Jakarta Persistence (JPA) to map classes to a relational database.
 
 ## Designers
--Matthew Khoury, 101188452
--Evan Baldwin,
--Anabella, Villeneuve,
--Sebastian, Lionais,
-
+- Matthew Khoury, Student # 101188452  
+- Evan Baldwin, Student # 101222276  
+- Anabella Villeneuve, Student # 101182327   
+- Sebastian Lionais, Student # 101157892
 
 
 
@@ -68,3 +67,13 @@ Represents a review of a product left by a customer, including a rating, text, a
 - **Relationships**:
   - Many-to-one relationship with `Customer` (each review has one customer).
   - Many-to-one relationship with `Product` (each review relates to one product).
+
+## Database Schema
+
+This database schema represents a temporary H2 Database utilized to test this proof of concept. Later iterations
+will be switching to a persistent database provider and a new database schema will be created in association with 
+the updated database.
+
+Primary keys are represented by an underline, and foreign keys contain an arrow associated with their respective primary keys.
+
+![SYSC4806 Database Schema M1](https://github.com/user-attachments/assets/ec2305fa-821b-4603-9c49-b2aa60672247)
