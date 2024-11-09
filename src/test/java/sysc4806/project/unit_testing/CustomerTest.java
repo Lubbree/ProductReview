@@ -37,10 +37,10 @@ public class CustomerTest {
 
     @Test
     public void testSetters(){
-        Set<Customer> testFollowing = new HashSet<Customer>();
+        Set<Customer> testFollowing = new HashSet<>();
         testFollowing.add(testCustomer1);
         testFollowing.add(testCustomer2);
-        Set<Review> testReviews = new HashSet<Review>();
+        Set<Review> testReviews = new HashSet<>();
         testReviews.add(testReview1);
         testReviews.add(testReview2);
 
@@ -59,7 +59,7 @@ public class CustomerTest {
 
     @Test
     public void testAddFollowing(){
-        Set<Customer> testFollowing = new HashSet<Customer>();
+        Set<Customer> testFollowing = new HashSet<>();
         assertEquals(testFollowing, customer.getFollowing());
 
         customer.addFollowing(testCustomer1);
@@ -75,7 +75,7 @@ public class CustomerTest {
 
     @Test
     public void testRemoveFollowing(){
-        Set<Customer> testFollowing = new HashSet<Customer>();
+        Set<Customer> testFollowing = new HashSet<>();
         customer.addFollowing(testCustomer1);
         customer.addFollowing(testCustomer2);
         testFollowing.add(testCustomer1);

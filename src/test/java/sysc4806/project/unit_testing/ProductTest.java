@@ -14,7 +14,6 @@ public class ProductTest {
     private Product product;
     private Review testReview1;
     private Review testReview2;
-    private List<Review> testReviews;
 
     @Before
     public void setUp(){
@@ -41,7 +40,7 @@ public class ProductTest {
         product.setCategory("Furniture");
         assertEquals("Furniture", product.getCategory());
 
-        testReviews = new ArrayList<>();
+        List<Review> testReviews = new ArrayList<>();
         testReviews.add(testReview1);
         testReviews.add(testReview2);
         product.setReviews(testReviews);
