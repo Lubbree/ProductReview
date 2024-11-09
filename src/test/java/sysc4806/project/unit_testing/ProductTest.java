@@ -41,7 +41,7 @@ public class ProductTest {
         product.setCategory("Furniture");
         assertEquals("Furniture", product.getCategory());
 
-        testReviews = new ArrayList<Review>();
+        testReviews = new ArrayList<>();
         testReviews.add(testReview1);
         testReviews.add(testReview2);
         product.setReviews(testReviews);
