@@ -12,8 +12,10 @@
             <th>Category</th>
         </tr>
         <tr th:each="product: ${products}">
-            <td th:text="${product.name}" />
-            <td th:text="${product.category}" />
+            <td>
+                <a th:href="@{/home/{productName}(productName=${product.name})}" th:text="${product.name}"></a>
+            </td>
+            <td th:text="${product.category}"></td>
         </tr>
     </table>
 
