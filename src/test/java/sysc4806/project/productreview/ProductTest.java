@@ -1,10 +1,8 @@
-package sysc4806.project.unit_testing;
+package sysc4806.project.productreview;
 
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
-import sysc4806.project.productreview.Product;
-import sysc4806.project.productreview.Review;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +29,6 @@ public class ProductTest {
 
     @Test
     public void testSetters(){
-        product.setProductId("001");
-        assertEquals("001", product.getProductId());
-
         product.setName("Wooden Table");
         assertEquals("Wooden Table", product.getName());
 

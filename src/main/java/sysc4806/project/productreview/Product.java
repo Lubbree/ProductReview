@@ -11,16 +11,11 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String productId;
     private String name;
     private String category;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
 
     public void setCategory(String category) {
         this.category = category;
@@ -33,6 +28,8 @@ public class Product {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setId(Long id) {this.id = id;}
 
     public void addReview(Review review) {
         reviews.add(review);
@@ -48,11 +45,11 @@ public class Product {
         return name;
     }
 
-    public String getProductId() {return productId;}
-
     public List<Review> getReviews() {return reviews;}
 
     public String getCategory() {
         return category;
     }
+
+    public Long getId() {return id;}
 }
