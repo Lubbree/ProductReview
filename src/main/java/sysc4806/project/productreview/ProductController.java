@@ -21,9 +21,9 @@ public class ProductController {
         return "home";
     }
 
-    @GetMapping("/home/{productName}")
-    public String viewProduct(@PathVariable String productName, Model model) {
-        model.addAttribute("productName", productName);
+    @GetMapping("/home/product/{id}")
+    public String viewProduct(@PathVariable Long id, Model model) {
+        model.addAttribute("product", productRepository.findById(id));
         return "product";
     }
 }
