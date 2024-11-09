@@ -12,7 +12,6 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String userId;
     private String name;
 
     @ManyToMany
@@ -26,8 +25,8 @@ public class Customer {
     @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews = new HashSet<>();
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserId(Long userId) {
+        this.id = userId;
     }
 
     public void setName(String name) {
@@ -42,7 +41,7 @@ public class Customer {
         this.reviews = reviews;
     }
 
-    public String getUserId() {return userId;}
+    public Long getUserId() {return id;}
 
     public String getName() {return name;}
 

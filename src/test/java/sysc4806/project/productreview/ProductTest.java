@@ -24,6 +24,7 @@ public class ProductTest {
     public void testInit(){
         assertNull(product.getName());
         assertNull(product.getCategory());
+        assertNull(product.getId());
         assertEquals(new ArrayList<>(), product.getReviews());
     }
 
@@ -34,6 +35,10 @@ public class ProductTest {
 
         product.setCategory("Furniture");
         assertEquals("Furniture", product.getCategory());
+
+        Long testLong = 1L;
+        product.setId(1L);
+        assertEquals(testLong, product.getId());
 
         List<Review> testReviews = new ArrayList<>();
         testReviews.add(testReview1);

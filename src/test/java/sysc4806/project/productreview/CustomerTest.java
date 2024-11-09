@@ -45,8 +45,9 @@ public class CustomerTest {
         customer.setName("John Smith");
         assertEquals("John Smith", customer.getName());
 
-        customer.setUserId("0015");
-        assertEquals("0015", customer.getUserId());
+        Long testLong = 1L;
+        customer.setUserId(testLong);
+        assertEquals(testLong, customer.getUserId());
 
         customer.setReviews(testReviews);
         assertEquals(testReviews, customer.getReviews());

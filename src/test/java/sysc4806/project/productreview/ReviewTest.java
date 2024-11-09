@@ -21,6 +21,7 @@ public class ReviewTest {
         assertNull(review.getReviewDate());
         assertNull(review.getReviewText());
         assertNull(review.getProduct());
+        assertNull(review.getId());
         assertEquals(0, review.getStarRating());
     }
 
@@ -35,6 +36,10 @@ public class ReviewTest {
 
         review.setReviewDate(time);
         assertEquals(time, review.getReviewDate());
+
+        Long testLong = 1L;
+        review.setId(1L);
+        assertEquals(testLong, review.getId());
 
         review.setReviewText("This is a good review!");
         assertEquals("This is a good review!", review.getReviewText());
