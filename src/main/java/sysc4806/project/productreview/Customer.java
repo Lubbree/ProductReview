@@ -42,13 +42,18 @@ public class Customer {
         this.reviews = reviews;
     }
 
+    public String getUserId() {return userId;}
+
+    public String getName() {return name;}
+
+    public Set<Review> getReviews() {return reviews;}
+
     public void addFollowing(Customer customer) {
         following.add(customer);
         customer.getFollowing().add(this);
     }
 
-    private Collection<Customer> getFollowing() {
-
+    public Collection<Customer> getFollowing() {
         return this.following;
     }
 

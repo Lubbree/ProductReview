@@ -22,24 +22,33 @@ public class Review {
     private String reviewText;
     private LocalDateTime reviewDate;
 
-
     public void setReviewer(Customer reviewer) {
         this.reviewer = reviewer;
     }
+
+    public Customer getReviewer() {return reviewer;}
 
     public void setProduct(Product product) {
         this.product = product;
     }
 
+    public Product getProduct() {return product;}
+
     public void setStarRating(int starRating) {
         this.starRating = starRating;
     }
+
+    public int getStarRating() {return starRating;}
 
     public void setReviewText(String reviewText) {
         this.reviewText = reviewText;
     }
 
+    public String getReviewText() {return reviewText;}
+
     public void setReviewDate(LocalDateTime reviewDate) {
         this.reviewDate = reviewDate;
     }
+
+    public LocalDateTime getReviewDate() {return reviewDate;}
 }
