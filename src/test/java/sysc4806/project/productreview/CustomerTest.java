@@ -1,8 +1,8 @@
 package sysc4806.project.productreview;
 
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,7 +16,7 @@ public class CustomerTest {
     private Review testReview1;
     private Review testReview2;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         customer = new Customer();
         testCustomer1 = new Customer();
