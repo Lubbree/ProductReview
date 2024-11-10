@@ -77,3 +77,12 @@ the updated database.
 Primary keys are represented by an underline, and foreign keys contain an arrow associated with their respective primary keys.
 
 ![SYSC4806 Database Schema M1](https://github.com/user-attachments/assets/ec2305fa-821b-4603-9c49-b2aa60672247)
+
+
+## UML Diagram
+
+This UML Diagram represents the application as of milestone 1. The diagram will be updated periodically to accound for new class's, attributes and methods
+
+[UML.pdf](https://github.com/user-attachments/files/17692978/UML.pdf)
+
+
