@@ -14,6 +14,13 @@ public class Customer {
 
     private String name;
 
+    @Column(unique = true, nullable = false)
+    private String username;
+
+    @Column(nullable = false)
+    private String password;
+
+
     @ManyToMany
     @JoinTable(
             name = "user_follows",
@@ -69,5 +76,20 @@ public class Customer {
     public void removeReview(Review review) {
         reviews.remove(review);
         review.setReviewer(null);
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
