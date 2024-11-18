@@ -13,6 +13,7 @@ public class Product {
 
     private String name;
     private String category;
+    private String description;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
@@ -28,6 +29,14 @@ public class Product {
     public void setName(String name) {this.name = name;}
 
     public void setId(Long id) { this.id = id;}
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 
     public void addReview(Review review) {
         reviews.add(review);
