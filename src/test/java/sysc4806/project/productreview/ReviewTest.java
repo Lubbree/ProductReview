@@ -1,16 +1,16 @@
 package sysc4806.project.productreview;
 
 
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
 
 public class ReviewTest {
     private Review review;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         review = new Review();
     }
