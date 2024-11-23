@@ -26,4 +26,16 @@ public class ProductController {
         model.addAttribute("product", productRepository.findById(id));
         return "product";
     }
+
+    @GetMapping("home/createAccount")
+    public String createAccount(Model model) {
+        return "createAccount";
+    }
+
+    @GetMapping("home/login")
+    public String login(Model model) {
+        return "login";
+    }
+
+
 }
