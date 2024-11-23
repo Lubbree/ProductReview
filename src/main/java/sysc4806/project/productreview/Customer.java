@@ -70,6 +70,9 @@ public class Customer {
     public void setName(String name) {
         this.name = name;
     }
+    public void setFollowing(Set<Customer> following) {
+        this.following = following;
+    }
 
     public Set<Review> getReviews() {
         return reviews;
