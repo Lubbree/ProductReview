@@ -5,13 +5,7 @@
     <title>Home</title>
 </head>
 <body>
-<!-- Navigation links -->
-<nav>
-    <a th:href="@{/home/login}">Login</a> |
-    <a th:href="@{/home/createAccount}">Create Account</a>
-</nav>
-
-<hr>
+<div th:replace="~{fragments/header :: header}">Header </div>
 
 <!-- Product list table -->
 <table>
