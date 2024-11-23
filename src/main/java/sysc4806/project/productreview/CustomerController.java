@@ -29,6 +29,7 @@ public class CustomerController {
         }
     }
 
+    /**
     @PostMapping("/login")
     public ResponseEntity<?> loginCustomer(@RequestBody LoginRequest loginRequest) {
         try {
@@ -41,4 +42,5 @@ public class CustomerController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    **/
 }
