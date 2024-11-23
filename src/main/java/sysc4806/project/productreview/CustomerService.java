@@ -2,7 +2,6 @@ package sysc4806.project.productreview;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.util.Optional;
 
@@ -16,17 +15,18 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
+
     public Customer registerCustomer(String name, String email, String password) {
         if (customerRepository.findByEmail(email).isPresent()) {
             throw new IllegalArgumentException("Email is already in use");
         }
 
-        String hashedPassword = hashPassword(password);
-
+        // Create and save the new customer
         Customer customer = new Customer();
-        customer.createAccount(name, email, hashedPassword);
+        customer.createAccount(name, email, password); // Store raw password directly
         return customerRepository.save(customer);
     }
+
 
     public Customer loginCustomer(String email, String password) {
         Optional<Customer> optionalCustomer = customerRepository.findByEmail(email);
@@ -37,18 +37,11 @@ public class CustomerService {
 
         Customer customer = optionalCustomer.get();
 
-        if (!verifyPassword(password, customer.getPassword())) {
+        // Directly compare the raw password
+        if (!customer.getPassword().equals(password)) {
             throw new IllegalArgumentException("Invalid email or password");
         }
 
         return customer;
-    }
-
-    private String hashPassword(String password) {
-        return BCrypt.hashpw(password, BCrypt.gensalt());
-    }
-
-    private boolean verifyPassword(String rawPassword, String hashedPassword) {
-        return BCrypt.checkpw(rawPassword, hashedPassword);
     }
 }
