@@ -59,8 +59,10 @@ public class IntegrationTest {
     public void testSaveAndFindCustomer(){
         Customer c = new Customer();
         c.setName("Sam");
-
+        c.setUsername("sam123");
+        c.setPassword("password123");
         Customer saved = customerRepo.save(c);
+        //fix this
         Customer foundCustomer = customerRepo.findById(saved.getUserId()).orElse(null);
 
         assertNotNull(foundCustomer);
@@ -77,17 +79,20 @@ public class IntegrationTest {
 
         Customer customer = new Customer();
         customer.setName("Sam");
+        customer.setUsername("sam123"); // Set username (required field)
+        customer.setPassword("password123"); // Set password (required field)
 
         Review review = new Review();
         review.setReviewText("Great product!");
         review.setStarRating(5);
 
-        p.addReview(review);
+        p.addReview(review); // Associate the review with the product
+        customer.addReview(review); // Associate the review with the customer
 
-        customer.addReview(review);
-        customerRepo.save(customer);
+        customerRepo.save(customer); // Save the customer, ensuring all required fields are set
 
-        Customer foundCustomer = customerRepo.findById(customer.getUserId()).get();
+        Customer foundCustomer = customerRepo.findById(customer.getUserId()).orElse(null);
+
         assertEquals(1, foundCustomer.getReviews().size());
         assertEquals("Great product!", foundCustomer.getReviews().iterator().next().getReviewText());
         assertEquals("Test", foundCustomer.getReviews().iterator().next().getProduct().getName());
