@@ -79,8 +79,8 @@ public class IntegrationTest {
 
         Customer customer = new Customer();
         customer.setName("Sam");
-        customer.setUsername("sam123"); // Set username (required field)
-        customer.setPassword("password123"); // Set password (required field)
+        customer.setUsername("sam123");
+        customer.setPassword("password123");
 
         Review review = new Review();
         review.setReviewText("Great product!");
