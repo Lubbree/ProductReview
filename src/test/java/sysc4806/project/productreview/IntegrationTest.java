@@ -8,8 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -21,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @Testcontainers
-@DataJpaTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class IntegrationTest {
 
@@ -36,12 +38,12 @@ public class IntegrationTest {
 
     @BeforeAll
     static void beforeAll() {
-        //postgres.start();
+        postgres.start();
     }
 
     @AfterAll
     static void afterAll() {
-        //postgres.stop();
+        postgres.stop();
     }
 
 
@@ -51,11 +53,14 @@ public class IntegrationTest {
     @Autowired
     private CustomerRepository customerRepo;
 
+    @Autowired
+    private ReviewRepository reviewRepo;
+
     @BeforeEach
     void setUp() {
-        //RestAssured.baseURI = "http://localhost:" + port;
-        //customerRepo.deleteAll();
-        //productRepo.deleteAll();
+        customerRepo.deleteAll();
+        productRepo.deleteAll();
+        reviewRepo.deleteAll();
     }
 
     @Test
@@ -79,16 +84,23 @@ public class IntegrationTest {
         assertEquals("Test product", foundProduct.getDescription());
     }
 
+    @Transactional
     @Test
     public void testAddAndRetrieveReviews() {
+        String pName = "Test";
+        String pCategory = "111";
+        String pDescription = "Test product";
+
         Product p = new Product();
-        p.setName("Test");
-        p.setCategory("111");
-        p.setDescription("Test product");
+        p.setName(pName);
+        p.setCategory(pCategory);
+        p.setDescription(pDescription);
 
         Review r = new Review();
+        String reviewText = "awesome";
+        r.setReviewText(reviewText);
+
         p.addReview(r);
-        r.setReviewText("awesome");
 
         Product saved = productRepo.save(p);
         Product foundProduct = productRepo.findById(saved.getId()).orElse(null);
@@ -96,46 +108,68 @@ public class IntegrationTest {
         assertNotNull(foundProduct);
         List<Review> reviews = foundProduct.getReviews();
         assertEquals(1, reviews.size());
-        assertEquals("awesome", reviews.get(0).getReviewText());
+        assertEquals(reviewText, reviews.get(0).getReviewText());
 
     }
 
     @Test
     public void testSaveAndFindCustomer(){
+        String cName = "Sam";
+        String cEmail = "sam@gmail.ca";
+        String cPassword = "password";
+
         Customer c = new Customer();
-        c.setName("Sam");
+        c.setName(cName);
+        c.setEmail(cEmail);
+        c.setPassword(cPassword);
 
         Customer saved = customerRepo.save(c);
         Customer foundCustomer = customerRepo.findById(saved.getUserId()).orElse(null);
 
         assertNotNull(foundCustomer);
-        assertEquals("Sam", foundCustomer.getName());
+        assertEquals(cName, foundCustomer.getName());
+        assertEquals(cEmail, foundCustomer.getEmail());
+        assertEquals(cPassword, foundCustomer.getPassword());
 
     }
 
+    @Transactional
     @Test
     public void testReviewCustomerAndProduct() {
-        Product p = new Product();
-        p.setName("Test");
-        p.setCategory("111");
-        p.setDescription("Test product");
+        String pName = "Test";
+        String pCategory = "111";
+        String pDescription = "Test product";
 
-        Customer customer = new Customer();
-        customer.setName("Sam");
+        Product p = new Product();
+        p.setName(pName);
+        p.setCategory(pCategory);
+        p.setDescription(pDescription);
+
+        String cName = "Sam";
+        String cEmail = "sam@gmail.ca";
+        String cPassword = "password";
+
+        Customer c = new Customer();
+        c.setName(cName);
+        c.setEmail(cEmail);
+        c.setPassword(cPassword);
 
         Review review = new Review();
-        review.setReviewText("Great product!");
+        String reviewText = "Great product!";
+        review.setReviewText(reviewText);
         review.setStarRating(5);
+        reviewRepo.save(review);
 
         p.addReview(review);
+        productRepo.save(p);
 
-        customer.addReview(review);
-        customerRepo.save(customer);
+        c.addReview(review);
+        customerRepo.save(c);
 
-        Customer foundCustomer = customerRepo.findById(customer.getUserId()).get();
+        Customer foundCustomer = customerRepo.findById(c.getUserId()).get();
         assertEquals(1, foundCustomer.getReviews().size());
-        assertEquals("Great product!", foundCustomer.getReviews().iterator().next().getReviewText());
-        assertEquals("Test", foundCustomer.getReviews().iterator().next().getProduct().getName());
+        assertEquals(reviewText, foundCustomer.getReviews().iterator().next().getReviewText());
+        assertEquals(pName, foundCustomer.getReviews().iterator().next().getProduct().getName());
     }
 }
 
