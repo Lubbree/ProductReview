@@ -6,13 +6,13 @@
 </head>
 <body>
 <!-- Back to Home Link -->
-<a th:href="@{/home}">Back to Home</a>
+<a href="/home">Back to Home</a>
 
 <!-- Page Title -->
 <h1>Create a new account:</h1>
 
 <!-- Create Account Form -->
-<form th:action="@{/home/createAccount}" method="post">
+<form id="createAccountForm">
     <!-- Name Field -->
     <label for="name">Name:</label><br>
     <input type="text" id="name" name="name" placeholder="Enter your name" required><br><br>
@@ -26,7 +26,41 @@
     <input type="password" id="password" name="password" placeholder="Enter your password" required><br><br>
 
     <!-- Submit Button -->
-    <button type="submit">Create Account</button>
+    <button type="button" onclick="createAccount()">Create Account</button>
 </form>
+
+<!-- Success/Failure Message -->
+<div id="message"></div>
+
+<script>
+    async function createAccount() {
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        try {
+            // Send a POST request to the back-end API
+            const response = await fetch('/api/customers/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, password })
+
+            });
+
+            const messageDiv = document.getElementById("message");
+            if (response.ok) {
+                const data = await response.json();
+                messageDiv.textContent = `Account created for ${data.name}!`;
+                messageDiv.style.color = 'green';
+            } else {
+                const error = await response.text();
+                messageDiv.textContent = `Error: ${error}`;
+                messageDiv.style.color = 'red';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+</script>
 </body>
 </html>
