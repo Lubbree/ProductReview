@@ -5,8 +5,8 @@
   <title>Product Details</title>
 </head>
 <body>
+<div th:replace="~{fragments/header :: header}">Header </div>
 
-  <a th:href="@{/home}">Back to Home</a>
   <h1>Product Details</h1>
 
   <ul>
@@ -14,6 +14,8 @@
     <li>Product Category: <span th:text="${product.get().getCategory()}"></span></li>
     <li>Product Description: <span th:text="${product.get().getDescription()}"></span></li>
   </ul>
+
+  <a  th:href="@{/newReview}">Write a New Review?</a>
 
   <h2>Reviews:</h2>
 

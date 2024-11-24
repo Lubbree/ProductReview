@@ -17,12 +17,11 @@
         <a th:href="@{/home/logout}">Logout</a>
     </span>
 </nav>
+<div th:replace="~{fragments/header :: header}">Header </div>
 
-<hr>
-
+<h1>Product List</h1>
 <!-- Product list table -->
 <table>
-    <caption>Product List</caption>
     <tr>
         <th>Name</th>
         <th>Category</th>

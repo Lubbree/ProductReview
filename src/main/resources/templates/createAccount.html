@@ -5,8 +5,7 @@
     <title>Create Account</title>
 </head>
 <body>
-<!-- Back to Home Link -->
-<a href="/home">Back to Home</a>
+<div th:replace="~{fragments/header :: header}">Header </div>
 
 <!-- Page Title -->
 <h1>Create a new account:</h1>
@@ -32,11 +31,11 @@
 <!-- Success/Failure Message -->
 <div id="message"></div>
 
-<script>
-    async function createAccount() {
-        const name = document.getElementById("name").value;
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
+    <script>
+        async function createAccount() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
 
         try {
             // Send a POST request to the back-end API
