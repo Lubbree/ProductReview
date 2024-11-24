@@ -6,44 +6,44 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Testcontainers
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class IntegrationTest {
 
     @LocalServerPort
     private Integer port;
 
+    @Container
+    @ServiceConnection
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
-            "postgres:16-alpine"
+            "postgres:16-0"
     );
 
     @BeforeAll
     static void beforeAll() {
-        postgres.start();
+        //postgres.start();
     }
 
     @AfterAll
     static void afterAll() {
-        postgres.stop();
+        //postgres.stop();
     }
 
-    @DynamicPropertySource
-    static void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", postgres::getJdbcUrl);
-        registry.add("spring.datasource.username", postgres::getUsername);
-        registry.add("spring.datasource.password", postgres::getPassword);
-    }
 
     @Autowired
     private ProductRepository productRepo;
@@ -53,9 +53,14 @@ public class IntegrationTest {
 
     @BeforeEach
     void setUp() {
-        RestAssured.baseURI = "http://localhost:" + port;
-        customerRepo.deleteAll();
-        productRepo.deleteAll();
+        //RestAssured.baseURI = "http://localhost:" + port;
+        //customerRepo.deleteAll();
+        //productRepo.deleteAll();
+    }
+
+    @Test
+    void connectionEstablished() {
+        assertThat(postgres.isCreated()).isTrue();
     }
 
     @Test
