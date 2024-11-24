@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Create Account</title>
 </head>
 <body>
-<!-- Back to Home Link -->
-<a href="/home">Back to Home</a>
+<div th:replace="~{fragments/header :: header}">Header </div>
 
 <!-- Page Title -->
 <h1>Create a new account:</h1>
@@ -32,35 +31,35 @@
 <!-- Success/Failure Message -->
 <div id="message"></div>
 
-<script>
-    async function createAccount() {
-        const name = document.getElementById("name").value;
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
+    <script>
+        async function createAccount() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
 
-        try {
-            // Send a POST request to the back-end API
-            const response = await fetch('/api/customers/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, password })
+            try {
+                // Send a POST request to the back-end API
+                const response = await fetch('/api/customers/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password })
 
-            });
+                });
 
-            const messageDiv = document.getElementById("message");
-            if (response.ok) {
-                const data = await response.json();
-                messageDiv.textContent = `Account created for ${data.name}!`;
-                messageDiv.style.color = 'green';
-            } else {
-                const error = await response.text();
-                messageDiv.textContent = `Error: ${error}`;
-                messageDiv.style.color = 'red';
+                const messageDiv = document.getElementById("message");
+                if (response.ok) {
+                    const data = await response.json();
+                    messageDiv.textContent = `Account created for ${data.name}!`;
+                    messageDiv.style.color = 'green';
+                } else {
+                    const error = await response.text();
+                    messageDiv.textContent = `Error: ${error}`;
+                    messageDiv.style.color = 'red';
+                }
+            } catch (error) {
+                console.error('Error:', error);
             }
-        } catch (error) {
-            console.error('Error:', error);
         }
-    }
-</script>
+    </script>
 </body>
 </html>

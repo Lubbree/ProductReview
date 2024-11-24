@@ -32,12 +32,12 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("home/createAccount")
+    @GetMapping("/createAccount")
     public String createAccount(Model model) {
         return "createAccount";
     }
 
-    @PostMapping("/home/createAccount")
+    @PostMapping("/createAccount")
     public String handleCreateAccount(@RequestParam String name,
                                       @RequestParam String email,
                                       @RequestParam String password,
@@ -56,6 +56,7 @@ public class CustomerController {
         model.addAttribute("account", customerRepository.findByEmail(email));
         return "accountInfo";
     }
+
 
     /**
     @PostMapping("/login")
