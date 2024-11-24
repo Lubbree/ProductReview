@@ -43,7 +43,8 @@
             const response = await fetch('/api/customers/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, password }) // Send JSON payload
+                body: JSON.stringify({ name, email, password })
+
             });
 
             const messageDiv = document.getElementById("message");
