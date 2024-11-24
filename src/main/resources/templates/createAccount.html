@@ -55,7 +55,7 @@
                 // Redirect to home page after 2 seconds
                 setTimeout(() => {
                     window.location.href = "/home"; // Adjust the URL if necessary
-                }, 2000);
+                }, 4000);
             } else {
                 const error = await response.text();
                 messageDiv.textContent = `Error: ${error}`;
