@@ -14,7 +14,7 @@
     <!-- Show logout link and welcome message if the user is logged in -->
     <span th:if="${loggedInUser != null}">
         Welcome, <span th:text="${loggedInUser.name}"></span>! |
-        <a th:href="@{/api/customers/logout}">Logout</a>
+        <a th:href="@{/home/logout}">Logout</a>
     </span>
 </nav>
 

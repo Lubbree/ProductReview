@@ -45,11 +45,6 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/logout")
-    public ResponseEntity<?> logout(HttpSession session) {
-        session.invalidate(); // Clear the session
-        return ResponseEntity.ok("Logged out successfully");
-    }
 
 
 }
