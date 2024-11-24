@@ -43,15 +43,19 @@
             const response = await fetch('/api/customers/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, password })
-
+                body: JSON.stringify({ name, email, password }) // Send JSON payload
             });
 
             const messageDiv = document.getElementById("message");
             if (response.ok) {
                 const data = await response.json();
-                messageDiv.textContent = `Account created for ${data.name}!`;
+                messageDiv.textContent = `Account created for ${data.name}! Redirecting to home...`;
                 messageDiv.style.color = 'green';
+
+                // Redirect to home page after 2 seconds
+                setTimeout(() => {
+                    window.location.href = "/home"; // Adjust the URL if necessary
+                }, 2000);
             } else {
                 const error = await response.text();
                 messageDiv.textContent = `Error: ${error}`;
@@ -59,8 +63,12 @@
             }
         } catch (error) {
             console.error('Error:', error);
+            const messageDiv = document.getElementById("message");
+            messageDiv.textContent = "An unexpected error occurred.";
+            messageDiv.style.color = 'red';
         }
     }
 </script>
+
 </body>
 </html>
