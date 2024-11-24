@@ -15,7 +15,6 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-
     public Customer registerCustomer(String name, String email, String password) {
         if (customerRepository.findByEmail(email).isPresent()) {
             throw new IllegalArgumentException("Email is already in use");

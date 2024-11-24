@@ -7,5 +7,58 @@
 <body>
     <a th:href="@{/home}">Back to Home</a>
     <h1>Login</h1>
+
+    <form id="loginForm">
+
+        <!-- Email Field -->
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required><br><br>
+
+        <!-- Password Field -->
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required><br><br>
+
+        <!-- Submit Button -->
+        <button type="button" onclick="Login()">Login</button>
+    </form>
+
+    <div id="message"></div>
+
+    <script>
+        async function Login() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                // Send a POST request to the back-end API
+                const response = await fetch('/api/customers/login', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({email, password})
+
+                });
+
+                const messageDiv = document.getElementById("message");
+                if (response.ok) {
+                    const data = await response.json();
+                    messageDiv.textContent = `Logged in as user ${data.email}!`;
+                    messageDiv.style.color = 'green';
+
+                    setTimeout(() => {
+                        window.location.href = "/home"; // Adjust the URL if necessary
+                    }, 2000);
+                } else {
+                    const error = await response.text();
+                    messageDiv.textContent = `Error: ${error}`;
+                    messageDiv.style.color = 'red';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+
+        }
+
+
+    </script>
 </body>
 </html>
