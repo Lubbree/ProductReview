@@ -31,7 +31,7 @@ public class IntegrationTest {
     @Container
     @ServiceConnection
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
-            "postgres:16-0"
+            "postgres:16.4"
     );
 
     @BeforeAll
