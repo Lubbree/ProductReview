@@ -7,8 +7,15 @@
 <body>
 <!-- Navigation links -->
 <nav>
-    <a th:href="@{/home/login}">Login</a> |
-    <a th:href="@{/home/createAccount}">Create Account</a>
+    <!-- Show login and create account links only if the user is not logged in -->
+    <a th:if="${loggedInUser == null}" th:href="@{/home/login}">Login</a> |
+    <a th:if="${loggedInUser == null}" th:href="@{/home/createAccount}">Create Account</a>
+
+    <!-- Show logout link and welcome message if the user is logged in -->
+    <span th:if="${loggedInUser != null}">
+        Welcome, <span th:text="${loggedInUser.name}"></span>! |
+        <a th:href="@{/api/customers/logout}">Logout</a>
+    </span>
 </nav>
 
 <hr>
