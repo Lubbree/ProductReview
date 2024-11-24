@@ -20,7 +20,7 @@ public class Customer {
     @Column(nullable = false)
     private String password; // Securely store password (we'll hash it in the service layer)
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_follows",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -28,7 +28,7 @@ public class Customer {
     )
     private Set<Customer> following = new HashSet<>();
 
-    @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Review> reviews = new HashSet<>();
 
     // Getters and setters for new fields

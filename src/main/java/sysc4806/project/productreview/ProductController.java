@@ -1,5 +1,6 @@
 package sysc4806.project.productreview;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +20,12 @@ public class ProductController {
     }
 
     @GetMapping("/home")
-    public String home(Model model) {
+    public String home(Model model, HttpSession session) {
         model.addAttribute("products", productRepository.findAll());
+
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+        model.addAttribute("loggedInUser", loggedInUser);
+
         return "home";
     }
 
@@ -28,6 +33,11 @@ public class ProductController {
     public String viewProduct(@PathVariable Long id, Model model) {
         model.addAttribute("product", productRepository.findById(id));
         return "product";
+    }
+
+    @GetMapping("home/createAccount")
+    public String createAccount(Model model) {
+        return "createAccount";
     }
 
     @GetMapping("home/login")
@@ -43,6 +53,13 @@ public class ProductController {
         System.out.println("Email: " + email);
         System.out.println("Password: " + password);
         return "redirect:/home";
+
+    }
+
+    @GetMapping("/home/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // Clear the session
+        return "home";
     }
 
     @PostConstruct

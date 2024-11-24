@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Create Account</title>
@@ -37,29 +37,36 @@
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
-            try {
-                // Send a POST request to the back-end API
-                const response = await fetch('/api/customers/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, password })
+        try {
+            // Send a POST request to the back-end API
+            const response = await fetch('/api/customers/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, password }) // Send JSON payload
+            });
 
-                });
+            const messageDiv = document.getElementById("message");
+            if (response.ok) {
+                const data = await response.json();
+                messageDiv.textContent = `Account created for ${data.name}! Redirecting to home...`;
+                messageDiv.style.color = 'green';
 
-                const messageDiv = document.getElementById("message");
-                if (response.ok) {
-                    const data = await response.json();
-                    messageDiv.textContent = `Account created for ${data.name}!`;
-                    messageDiv.style.color = 'green';
-                } else {
-                    const error = await response.text();
-                    messageDiv.textContent = `Error: ${error}`;
-                    messageDiv.style.color = 'red';
-                }
-            } catch (error) {
-                console.error('Error:', error);
+                // Redirect to home page after 2 seconds
+                setTimeout(() => {
+                    window.location.href = "/home"; // Adjust the URL if necessary
+                }, 2000);
+            } else {
+                const error = await response.text();
+                messageDiv.textContent = `Error: ${error}`;
+                messageDiv.style.color = 'red';
             }
+        } catch (error) {
+            console.error('Error:', error);
+            const messageDiv = document.getElementById("message");
+            messageDiv.textContent = "An unexpected error occurred.";
+            messageDiv.style.color = 'red';
         }
-    </script>
+    }
+</script>
 </body>
 </html>
