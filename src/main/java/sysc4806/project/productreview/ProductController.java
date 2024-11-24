@@ -29,30 +29,9 @@ public class ProductController {
         return "product";
     }
 
-    @GetMapping("home/createAccount")
-    public String createAccount(Model model) {
-        return "createAccount";
-    }
-
-    @PostMapping("/home/createAccount")
-    public String handleCreateAccount(@RequestParam String name,
-                                      @RequestParam String email,
-                                      @RequestParam String password,
-                                      Model model) {
-        // Simulate saving the account data
-        // You can add logic here to save the data to a database or process it as needed
-        System.out.println("New account created:");
-        System.out.println("Name: " + name);
-        System.out.println("Email: " + email);
-        System.out.println("Password: " + password);
-        return "redirect:/home";
-
-    }
-
     @GetMapping("home/login")
     public String login(Model model) {
         return "login";
     }
-
 
 }
