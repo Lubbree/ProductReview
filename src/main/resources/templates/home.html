@@ -5,19 +5,21 @@
     <title>Home</title>
 </head>
 <body>
-    <table>
-        <caption>Product List</caption>
-        <tr>
-            <th>Name</th>
-            <th>Category</th>
-        </tr>
-        <tr th:each="product: ${products}">
-            <td>
-                <a th:href="@{/home/product/{id}(id=${product.id})}" th:text="${product.name}"></a>
-            </td>
-            <td th:text="${product.category}"></td>
-        </tr>
-    </table>
+<div th:replace="~{fragments/header :: header}">Header </div>
 
+<h1>Product List</h1>
+<!-- Product list table -->
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Category</th>
+    </tr>
+    <tr th:each="product: ${products}">
+        <td>
+            <a th:href="@{/home/product/{id}(id=${product.id})}" th:text="${product.name}"></a>
+        </td>
+        <td th:text="${product.category}"></td>
+    </tr>
+</table>
 </body>
 </html>
