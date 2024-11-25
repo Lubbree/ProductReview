@@ -83,7 +83,7 @@ Primary keys are represented by an underline, and foreign keys contain an arrow 
 
 This UML Diagram represents the application as of milestone 1. The diagram will be updated periodically to accound for new class's, attributes and methods
 
-![UML_page-0001](https://github.com/user-attachments/assets/4e8513db-00cb-4f8d-b7f0-3a6a8f683c1b)
 
+![UML drawio](https://github.com/user-attachments/assets/cdcea220-5253-4a85-b820-20ecbdc0eaae)
 
 
