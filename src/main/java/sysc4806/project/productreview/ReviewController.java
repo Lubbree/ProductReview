@@ -1,7 +1,6 @@
 package sysc4806.project.productreview;
 
 import jakarta.servlet.http.HttpSession;
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
