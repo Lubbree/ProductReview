@@ -53,13 +53,19 @@ public class ProductController {
         System.out.println("Email: " + email);
         System.out.println("Password: " + password);
         return "redirect:/home";
-
     }
 
     @GetMapping("/home/logout")
     public String logout(HttpSession session) {
         session.invalidate(); // Clear the session
         return "home";
+    }
+
+    @GetMapping("/accountInfo")
+    public String accountInfo(Model model, HttpSession session) {
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+        model.addAttribute("customerInfo", loggedInUser);
+        return "accountInfo";
     }
 
     @PostConstruct

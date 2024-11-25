@@ -17,7 +17,17 @@
         <a th:href="@{/home/logout}">Logout</a>
     </span>
 </nav>
-<div th:replace="~{fragments/header :: header}">Header </div>
+
+<nav th:fragment="header" class="navbar">
+    <span th:if="${loggedInUser!=null}">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li><a class="nav-link" th:href="@{/accountInfo}">Your Account</a></li>
+                <li><a class="nav-link" th:href="@{/myReviews}">Your Reviews</a></li>
+            </ul>
+        </div>
+    </span>
+</nav>
 
 <h1>Product List</h1>
 <!-- Product list table -->
