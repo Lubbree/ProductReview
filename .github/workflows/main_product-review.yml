@@ -22,6 +22,11 @@ jobs:
           java-version: '17'
           distribution: 'microsoft'
 
+      - name: Setup Testcontainers Cloud Client
+        uses: atomicjar/testcontainers-cloud-setup-action@v1
+        with:
+          token: ${{ secrets.TC_CLOUD_TOKEN }}
+
       - name: Build with Maven
         run: mvn clean install
 
