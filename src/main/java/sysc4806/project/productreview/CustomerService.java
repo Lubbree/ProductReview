@@ -1,5 +1,6 @@
 package sysc4806.project.productreview;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,5 +43,20 @@ public class CustomerService {
         }
 
         return customer;
+    }
+
+    @PostConstruct
+    public void init() {
+        Customer customer1 = new Customer();
+        customer1.createAccount("Jack", "jack1@gmail.com", "123");
+        customerRepository.save(customer1);
+
+        Customer customer2 = new Customer();
+        customer2.createAccount("Jane", "jane2@gmail.com", "12345");
+        customerRepository.save(customer2);
+
+        Customer customer3 = new Customer();
+        customer3.createAccount("John", "john3@gmail.com", "abcde");
+        customerRepository.save(customer3);
     }
 }

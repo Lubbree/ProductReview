@@ -5,7 +5,15 @@
     <title>Account Information</title>
 </head>
 <body>
-<div th:replace="~{fragments/header :: header}">Header </div>
+<a th:href="@{/home}">Back to Home</a>
+
+<h1>Your Information</h1>
+
+<span>
+    Your current name: <span th:text="${customerInfo.name}"></span>
+<br/>
+    Your current email: <span th:text="${customerInfo.email}"></span>
+</span>
 
 </body>
 </html>
