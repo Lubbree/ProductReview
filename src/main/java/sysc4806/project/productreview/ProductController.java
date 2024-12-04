@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Optional;
+
 
 @Controller
 public class ProductController {
@@ -26,12 +28,16 @@ public class ProductController {
         Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
         model.addAttribute("loggedInUser", loggedInUser);
 
+        session.removeAttribute("currentProduct");
+
         return "home";
     }
 
     @GetMapping("/home/product/{id}")
-    public String viewProduct(@PathVariable Long id, Model model) {
-        model.addAttribute("product", productRepository.findById(id));
+    public String viewProduct(@PathVariable Long id, Model model, HttpSession session) {
+        Optional<Product> product = productRepository.findById(id);
+        session.setAttribute("currentProduct", product);
+        model.addAttribute("product", product);
         return "product";
     }
 

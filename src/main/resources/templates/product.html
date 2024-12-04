@@ -5,7 +5,9 @@
   <title>Product Details</title>
 </head>
 <body>
-<a th:href="@{/home}">Back to Home</a>
+<form action="#" th:action="@{/home}" th:method="get">
+  <button type="submit" >Back to Home Page</button>
+</form>
 
   <h1>Product Details</h1>
 
@@ -15,7 +17,9 @@
     <li>Product Description: <span th:text="${product.get().getDescription()}"></span></li>
   </ul>
 
-  <a  th:href="@{/newReview}">Write a New Review?</a>
+  <form action="#" th:action="@{/newReview}" th:method="get">
+    <button type="submit" id="submitButton">Write a New Review?</button>
+  </form>
   <h2>Reviews:</h2>
 
 </body>
