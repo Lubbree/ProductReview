@@ -45,6 +45,8 @@ public class ProductController {
         model.addAttribute("product", product);
         List<Review> reviews = reviewRepository.findByProduct(product);
         model.addAttribute("reviews", reviews);
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+        model.addAttribute("loggedInUser", loggedInUser);
         return "product";
     }
 
