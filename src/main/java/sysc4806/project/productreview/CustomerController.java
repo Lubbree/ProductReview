@@ -1,5 +1,6 @@
 package sysc4806.project.productreview;
 
+import net.minidev.json.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
@@ -44,7 +45,7 @@ public class CustomerController {
             );
 
             session.setAttribute("loggedInUser", customer);
-            return ResponseEntity.ok(customer);
+            return ResponseEntity.ok().body(new MessageObject(customer.getName()));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
