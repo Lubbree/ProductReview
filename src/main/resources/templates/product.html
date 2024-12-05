@@ -17,14 +17,12 @@
   <li>Product Description: <span th:text="${product.get().getDescription()}"></span></li>
 </ul>
 
-<!-- Show the button only if the user is logged in -->
 <div th:if="${loggedInUser != null}">
   <form action="#" th:action="@{/newReview}" th:method="get">
     <button type="submit" id="submitButton">Write a New Review?</button>
   </form>
 </div>
 
-<!-- Show a message prompting login if the user is not logged in -->
 <div th:if="${loggedInUser == null}">
   <p><strong>Note:</strong> You must <a th:href="@{/home/login}">log in</a> to write a review.</p>
 </div>
