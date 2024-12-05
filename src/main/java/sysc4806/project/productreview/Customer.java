@@ -1,6 +1,9 @@
 package sysc4806.project.productreview;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,7 +35,9 @@ public class Customer {
     )
     private Set<Customer> following = new HashSet<>();
 
+
     @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Review> reviews = new HashSet<>();
 
     // Getters and setters for new fields
