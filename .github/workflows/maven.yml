@@ -9,15 +9,16 @@
 name: Java CI with Maven
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
     - uses: actions/checkout@v4
@@ -27,6 +28,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    
-    - name: Build
+
+    - name: Build with Maven
       run: mvn --batch-mode package
