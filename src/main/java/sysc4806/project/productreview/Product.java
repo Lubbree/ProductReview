@@ -15,7 +15,7 @@ public class Product {
     private String category;
     private String description;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Review> reviews = new ArrayList<>();
 
     public void setCategory(String category) {

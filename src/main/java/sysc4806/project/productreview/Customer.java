@@ -1,6 +1,9 @@
 package sysc4806.project.productreview;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +16,10 @@ public class Customer {
     private Long id;
 
     private String name;
+
+    private double jaccard_index;
+
+    private int follower_count;
 
     @Column(unique = true, nullable = false)
     private String email; // Email will be the login credential
@@ -28,7 +35,9 @@ public class Customer {
     )
     private Set<Customer> following = new HashSet<>();
 
+
     @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Review> reviews = new HashSet<>();
 
     // Getters and setters for new fields
@@ -73,6 +82,14 @@ public class Customer {
     public void setFollowing(Set<Customer> following) {
         this.following = following;
     }
+
+    public void setJaccard_Index(double jaccardIndex) {this.jaccard_index = jaccardIndex;}
+
+    public double getJaccard_Index() {return jaccard_index;}
+
+    public void setFollower_Count(int followerCount) {this.follower_count = followerCount;}
+
+    public int getFollower_Count() {return follower_count;}
 
     public Set<Review> getReviews() {
         return reviews;

@@ -15,6 +15,7 @@
     <li>Product Name: <span th:text="${product.getName()}"></span></li>
     <li>Product Category: <span th:text="${product.getCategory()}"></span></li>
     <li>Product Description: <span th:text="${product.getDescription()}"></span></li>
+      <li>Average Star Rating: <span th:text="${stars}"></span></li>
   </ul>
 
 <div th:if="${loggedInUser != null}">
@@ -30,7 +31,7 @@
 <h2>Reviews:</h2>
 <div th:each="review: ${reviews}">
     <details>
-        <summary th:text="${review.reviewer.name + ' ' + review.starRating}"></summary>
+        <summary th:text="${review.reviewer.name + ' gave this product ' + review.starRating} + ' stars'"></summary>
         <p th:text="${review.reviewText}"></p>
     </details>
 </div>
