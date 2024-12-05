@@ -1,26 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <title>Product Details</title>
 </head>
 <body>
 <form action="#" th:action="@{/home}" th:method="get">
-  <button type="submit" >Back to Home Page</button>
+  <button type="submit">Back to Home Page</button>
 </form>
 
-  <h1>Product Details</h1>
+<h1>Product Details</h1>
 
-  <ul>
-    <li>Product Name: <span th:text="${product.get().getName()}"></span></li>
-    <li>Product Category: <span th:text="${product.get().getCategory()}"></span></li>
-    <li>Product Description: <span th:text="${product.get().getDescription()}"></span></li>
-  </ul>
+<ul>
+  <li>Product Name: <span th:text="${product.get().getName()}"></span></li>
+  <li>Product Category: <span th:text="${product.get().getCategory()}"></span></li>
+  <li>Product Description: <span th:text="${product.get().getDescription()}"></span></li>
+</ul>
 
+<!-- Show the button only if the user is logged in -->
+<div th:if="${loggedInUser != null}">
   <form action="#" th:action="@{/newReview}" th:method="get">
     <button type="submit" id="submitButton">Write a New Review?</button>
   </form>
-  <h2>Reviews:</h2>
+</div>
+
+<!-- Show a message prompting login if the user is not logged in -->
+<div th:if="${loggedInUser == null}">
+  <p><strong>Note:</strong> You must <a th:href="@{/home/login}">log in</a> to write a review.</p>
+</div>
+
+<h2>Reviews:</h2>
 
 </body>
 </html>
