@@ -34,13 +34,13 @@ public class ReviewController {
         return "newReview";
     }
 
-    @RequestMapping(value="/newReview", method=RequestMethod.POST)
-    public String processNewReview(@RequestBody Review review, HttpSession session, Model model) {
+    @PostMapping("/newReview")
+    public String processNewReview(@ModelAttribute Review review, HttpSession session, Model model) {
         LocalDateTime now = LocalDateTime.now();
         Customer customer = (Customer) session.getAttribute("loggedInUser");
         review.setReviewer(customer);
         review.setReviewDate(now);
-        Product product = (Product) session.getAttribute("currentProduct");
+        Product product = ((Optional<Product>) session.getAttribute("currentProduct")).get();
         review.setProduct(product);
         reviewRepository.save(review);
         session.removeAttribute("currentProduct");

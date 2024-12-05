@@ -11,7 +11,7 @@
 <h1>Write a new Review:</h1>
 
 <!-- Create Review Form -->
-<form action="#" th:action="@{/home}" th:object="${Review}" method="post">
+<form action="#" th:action="@{/newReview}" th:object="${Review}" method="post">
   <p>How many stars would you give this product?
   <select th:field="*{starRating}">
     <option th:value="1" th:text="'1'"></option>
