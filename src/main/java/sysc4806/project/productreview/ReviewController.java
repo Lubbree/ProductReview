@@ -40,7 +40,7 @@ public class ReviewController {
         Customer customer = (Customer) session.getAttribute("loggedInUser");
         review.setReviewer(customer);
         review.setReviewDate(now);
-        Product product = ((Optional<Product>) session.getAttribute("currentProduct")).get();
+        Product product = ((Product) session.getAttribute("currentProduct"));
         review.setProduct(product);
         reviewRepository.save(review);
         session.removeAttribute("currentProduct");

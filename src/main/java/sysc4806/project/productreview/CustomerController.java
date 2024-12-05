@@ -13,8 +13,12 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @Autowired
-    public CustomerController(CustomerService customerService) {
+    private final ReviewRepository reviewRepository;
+
+    @Autowired
+    public CustomerController(CustomerService customerService, ReviewRepository reviewRepository) {
         this.customerService = customerService;
+        this.reviewRepository = reviewRepository;
     }
 
     @PostMapping("/register")

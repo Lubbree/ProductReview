@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -16,9 +17,12 @@ import java.util.Optional;
 public class ProductController {
 
     private final ProductRepository productRepository;
+    private final ReviewRepository reviewRepository;
 
-    public ProductController(ProductRepository productRepository) {
+    public ProductController(ProductRepository productRepository,
+                             ReviewRepository reviewRepository) {
         this.productRepository = productRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     @GetMapping("/home")
@@ -35,9 +39,12 @@ public class ProductController {
 
     @GetMapping("/home/product/{id}")
     public String viewProduct(@PathVariable Long id, Model model, HttpSession session) {
-        Optional<Product> product = productRepository.findById(id);
+        Optional<Product> rawProduct = productRepository.findById(id);
+        Product product = rawProduct.get();
         session.setAttribute("currentProduct", product);
         model.addAttribute("product", product);
+        List<Review> reviews = reviewRepository.findByProduct(product);
+        model.addAttribute("reviews", reviews);
         return "product";
     }
 

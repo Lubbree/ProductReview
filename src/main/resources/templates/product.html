@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
   <title>Product Details</title>
 </head>
 <body>
 <form action="#" th:action="@{/home}" th:method="get">
-  <button type="submit">Back to Home Page</button>
+  <button type="submit" >Back to Home Page</button>
 </form>
 
-<h1>Product Details</h1>
+  <h1>Product Details</h1>
 
-<ul>
-  <li>Product Name: <span th:text="${product.get().getName()}"></span></li>
-  <li>Product Category: <span th:text="${product.get().getCategory()}"></span></li>
-  <li>Product Description: <span th:text="${product.get().getDescription()}"></span></li>
-</ul>
+  <ul>
+    <li>Product Name: <span th:text="${product.getName()}"></span></li>
+    <li>Product Category: <span th:text="${product.getCategory()}"></span></li>
+    <li>Product Description: <span th:text="${product.getDescription()}"></span></li>
+  </ul>
 
 <div th:if="${loggedInUser != null}">
   <form action="#" th:action="@{/newReview}" th:method="get">
@@ -28,6 +28,11 @@
 </div>
 
 <h2>Reviews:</h2>
-
+<div th:each="review: ${reviews}">
+    <details>
+        <summary th:text="${review.reviewer.name + ' ' + review.starRating}"></summary>
+        <p th:text="${review.reviewText}"></p>
+    </details>
+</div>
 </body>
 </html>
