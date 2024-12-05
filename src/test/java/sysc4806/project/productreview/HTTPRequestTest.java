@@ -26,6 +26,12 @@ public class HTTPRequestTest {
     @MockBean
     private ProductRepository productRepositoryMock;
 
+    @MockBean
+    private ReviewRepository reviewRepository;
+
+    @MockBean
+    private CustomerRepository customerRepository;
+
     @Test
     public void homeGetRequestTest() throws Exception {
         this.mockMvc.perform(get("/home")).andDo(print())

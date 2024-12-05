@@ -83,24 +83,24 @@ public class ProductController {
         return "accountInfo";
     }
 
-    @PostConstruct
-    public void init(){
-        Product product1 = new Product();
-        product1.setName("JetStream® 3 Piece Hardside Luggage Set");
-        product1.setCategory("Furniture/Luggage");
-        product1.setDescription("https://www.walmart.ca/en/ip/jetstream-3-piece-hardside-luggage-set-cream/6000206846841");
-        productRepository.save(product1);
-
-        Product product2 = new Product();
-        product2.setName("AirPods Pro (2nd generation) with USB-C");
-        product2.setCategory("Technology");
-        product2.setDescription("https://www.walmart.ca/en/ip/AirPods-Pro-2nd-generation-with-USB-C/6000206604258");
-        productRepository.save(product2);
-
-        Product product3 = new Product();
-        product3.setName("Pokémon 24'' Plush - Snorlax");
-        product3.setCategory("Toys");
-        product3.setDescription("https://www.walmart.ca/en/ip/pokmon-24-plush-snorlax-bluewhite/6000208095332");
-        productRepository.save(product3);
-    }
+//    @PostConstruct
+//    public void init(){
+//        Product product1 = new Product();
+//        product1.setName("JetStream® 3 Piece Hardside Luggage Set");
+//        product1.setCategory("Furniture/Luggage");
+//        product1.setDescription("https://www.walmart.ca/en/ip/jetstream-3-piece-hardside-luggage-set-cream/6000206846841");
+//        productRepository.save(product1);
+//
+//        Product product2 = new Product();
+//        product2.setName("AirPods Pro (2nd generation) with USB-C");
+//        product2.setCategory("Technology");
+//        product2.setDescription("https://www.walmart.ca/en/ip/AirPods-Pro-2nd-generation-with-USB-C/6000206604258");
+//        productRepository.save(product2);
+//
+//        Product product3 = new Product();
+//        product3.setName("Pokémon 24'' Plush - Snorlax");
+//        product3.setCategory("Toys");
+//        product3.setDescription("https://www.walmart.ca/en/ip/pokmon-24-plush-snorlax-bluewhite/6000208095332");
+//        productRepository.save(product3);
+//    }
 }
