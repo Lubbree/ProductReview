@@ -73,7 +73,7 @@ public class ProductController {
     @GetMapping("/home/logout")
     public String logout(HttpSession session) {
         session.invalidate(); // Clear the session
-        return "home";
+        return "redirect:/home";
     }
 
     @GetMapping("/accountInfo")

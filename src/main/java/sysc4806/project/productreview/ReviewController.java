@@ -44,6 +44,6 @@ public class ReviewController {
         review.setProduct(product);
         reviewRepository.save(review);
         session.removeAttribute("currentProduct");
-        return "home";
+        return "redirect:/home/product/" + product.getId();
     }
 }
