@@ -14,6 +14,12 @@ public class Customer {
 
     private String name;
 
+    @Column()
+    private double jaccard_index;
+
+    @Column(nullable = false)
+    private int follower_count;
+
     @Column(unique = true, nullable = false)
     private String email; // Email will be the login credential
 
@@ -73,6 +79,14 @@ public class Customer {
     public void setFollowing(Set<Customer> following) {
         this.following = following;
     }
+
+    public void setJaccard_Index(double jaccardIndex) {this.jaccard_index = jaccardIndex;}
+
+    public double getJaccard_Index() {return jaccard_index;}
+
+    public void setFollower_Count(int followerCount) {this.follower_count = followerCount;}
+
+    public int getFollower_Count() {return follower_count;}
 
     public Set<Review> getReviews() {
         return reviews;

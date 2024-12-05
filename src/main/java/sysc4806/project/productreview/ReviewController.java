@@ -6,17 +6,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
+import java.util.*;
 
 @Controller
 public class ReviewController {
 
     private final ReviewRepository reviewRepository;
+    private final CustomerRepository customerRepository;
 
-    public ReviewController(ReviewRepository reviewRepository) {
+    public ReviewController(ReviewRepository reviewRepository, CustomerRepository customerRepository) {
         this.reviewRepository = reviewRepository;
+        this.customerRepository = customerRepository;
     }
 
     @GetMapping("/myReviews")
@@ -45,5 +45,62 @@ public class ReviewController {
         reviewRepository.save(review);
         session.removeAttribute("currentProduct");
         return "redirect:/home/product/" + product.getId();
+    }
+
+    @GetMapping("/users")
+    public String showUsers(Model model, HttpSession session) {
+        List<Customer> customers = (List<Customer>) customerRepository.findAll();
+        Customer current = (Customer) session.getAttribute("loggedInUser");
+        customers.remove(current);
+
+        model.addAttribute("customers", customers);
+        return "users";
+    }
+
+    @GetMapping("/users/jaccard")
+    public String showJaccardUsers(Model model, HttpSession session) {
+        List<Customer> customers = (List<Customer>) customerRepository.findAll();
+        Customer current = (Customer) session.getAttribute("loggedInUser");
+        customers.remove(current);
+        for (Customer customer : customers) {
+            customer.setJaccard_Index(jaccardDistance(current, customer));
+        }
+        customers.sort(new JaccardComparator());
+
+        model.addAttribute("customers", customers);
+        return "redirect:/users";
+    }
+
+    @GetMapping("/users/popular")
+    public String showPopularUsers(Model model, HttpSession session) {
+        List<Customer> customers = (List<Customer>) customerRepository.findAll();
+        Customer current = (Customer) session.getAttribute("loggedInUser");
+        customers.remove(current);
+
+        customers.sort(new FollowerComparator());
+
+        model.addAttribute("customers", customers);
+        return "redirect:/users";
+    }
+
+    public double jaccardDistance(Customer c1, Customer c2) {
+        List<Review> c1Reviews = new ArrayList<>(c1.getReviews());
+        List<Review> c2Reviews = new ArrayList<>(c2.getReviews());
+
+        sortReviews(c1Reviews);
+        sortReviews(c2Reviews);
+        List<Review> temp = c1Reviews;
+
+        c1Reviews.retainAll(c2Reviews);
+        temp.addAll(c2Reviews);
+
+        int intersection = c1Reviews.size();
+        int union = temp.size();
+
+        return ((double) intersection / union);
+    }
+
+    public static void sortReviews(List<Review> review){
+        review.sort(Comparator.comparing(Review::getId));
     }
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<form action="#" th:action="@{/home}" th:method="get">
+    <button type="submit" >Back to Home Page</button>
+</form>
+
+<h1>User List</h1>
+
+<form action="#" th:action="@{/users/jaccard}" th:method="get">
+    <button type="submit" >Sort by Jaccard Distance</button>
+</form>
+<form action="#" th:action="@{/users/popular}" th:method="get">
+    <button type="submit" >Sort by Most Followers</button>
+</form>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Followers</th>
+        <th>Follow this user?</th>
+    </tr>
+    <tr th:each="customer: ${customers}">
+        <td th:text="${customer.name}"></td>
+        <td th:text="${customer.follower_Count}"></td>
+        <td>
+            <a th:href="@{/home/follow}" th:text="${Follow}"></a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
