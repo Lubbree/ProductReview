@@ -3,12 +3,11 @@ package sysc4806.project.productreview;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -28,8 +27,23 @@ public class ReviewController {
         return "myReviews";
     }
 
-    @GetMapping("newReview")
-    public String showNewReview(Model model) {
+    @GetMapping("/newReview")
+    public String reviewForm(Model model, @RequestParam(name = "product") Optional<Product> product) {
+        model.addAttribute("product", product);
+        model.addAttribute("Review", new Review());
         return "newReview";
+    }
+
+    @PostMapping("/newReview")
+    public String processNewReview(@ModelAttribute Review review, HttpSession session, Model model) {
+        LocalDateTime now = LocalDateTime.now();
+        Customer customer = (Customer) session.getAttribute("loggedInUser");
+        review.setReviewer(customer);
+        review.setReviewDate(now);
+        Product product = ((Product) session.getAttribute("currentProduct"));
+        review.setProduct(product);
+        reviewRepository.save(review);
+        session.removeAttribute("currentProduct");
+        return "redirect:/home/product/" + product.getId();
     }
 }

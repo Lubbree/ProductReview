@@ -5,17 +5,34 @@
   <title>Product Details</title>
 </head>
 <body>
-<a th:href="@{/home}">Back to Home</a>
+<form action="#" th:action="@{/home}" th:method="get">
+  <button type="submit" >Back to Home Page</button>
+</form>
 
   <h1>Product Details</h1>
 
   <ul>
-    <li>Product Name: <span th:text="${product.get().getName()}"></span></li>
-    <li>Product Category: <span th:text="${product.get().getCategory()}"></span></li>
-    <li>Product Description: <span th:text="${product.get().getDescription()}"></span></li>
+    <li>Product Name: <span th:text="${product.getName()}"></span></li>
+    <li>Product Category: <span th:text="${product.getCategory()}"></span></li>
+    <li>Product Description: <span th:text="${product.getDescription()}"></span></li>
   </ul>
 
-  <h2>Reviews:</h2>
+<div th:if="${loggedInUser != null}">
+  <form action="#" th:action="@{/newReview}" th:method="get">
+    <button type="submit" id="submitButton">Write a New Review?</button>
+  </form>
+</div>
 
+<div th:if="${loggedInUser == null}">
+  <p><strong>Note:</strong> You must <a th:href="@{/home/login}">log in</a> to write a review.</p>
+</div>
+
+<h2>Reviews:</h2>
+<div th:each="review: ${reviews}">
+    <details>
+        <summary th:text="${review.reviewer.name + ' ' + review.starRating}"></summary>
+        <p th:text="${review.reviewText}"></p>
+    </details>
+</div>
 </body>
 </html>

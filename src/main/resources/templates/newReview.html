@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>Write a New Review</title>
 </head>
 <body>
@@ -11,8 +11,21 @@
 <h1>Write a new Review:</h1>
 
 <!-- Create Review Form -->
-<form id="createReviewForm">
+<form action="#" th:action="@{/newReview}" th:object="${Review}" method="post">
+  <p>How many stars would you give this product?
+  <select th:field="*{starRating}">
+    <option th:value="1" th:text="'1'"></option>
+    <option th:value="2" th:text="'2'"></option>
+    <option th:value="3" th:text="'3'"></option>
+    <option th:value="4" th:text="'4'"></option>
+    <option th:value="5" th:text="'5'"></option>
+  </select>
+  </p>
 
+  <p>Enter your review:
+    <input type="text" th:field="*{reviewText}" th:rows="20" th:cols="40"/>
+  </p>
+  <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>
 
 </body>

@@ -9,14 +9,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+import java.util.Optional;
+
 
 @Controller
 public class ProductController {
 
     private final ProductRepository productRepository;
+    private final ReviewRepository reviewRepository;
 
-    public ProductController(ProductRepository productRepository) {
+    public ProductController(ProductRepository productRepository,
+                             ReviewRepository reviewRepository) {
         this.productRepository = productRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     @GetMapping("/home")
@@ -26,12 +32,21 @@ public class ProductController {
         Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
         model.addAttribute("loggedInUser", loggedInUser);
 
+        session.removeAttribute("currentProduct");
+
         return "home";
     }
 
     @GetMapping("/home/product/{id}")
-    public String viewProduct(@PathVariable Long id, Model model) {
-        model.addAttribute("product", productRepository.findById(id));
+    public String viewProduct(@PathVariable Long id, Model model, HttpSession session) {
+        Optional<Product> rawProduct = productRepository.findById(id);
+        Product product = rawProduct.get();
+        session.setAttribute("currentProduct", product);
+        model.addAttribute("product", product);
+        List<Review> reviews = reviewRepository.findByProduct(product);
+        model.addAttribute("reviews", reviews);
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+        model.addAttribute("loggedInUser", loggedInUser);
         return "product";
     }
 
@@ -58,7 +73,7 @@ public class ProductController {
     @GetMapping("/home/logout")
     public String logout(HttpSession session) {
         session.invalidate(); // Clear the session
-        return "home";
+        return "redirect:/home";
     }
 
     @GetMapping("/accountInfo")
