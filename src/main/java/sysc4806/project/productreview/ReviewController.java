@@ -65,10 +65,11 @@ public class ReviewController {
         for (Customer customer : customers) {
             customer.setJaccard_Index(jaccardDistance(current, customer));
         }
-        customers.sort(new JaccardComparator());
 
+        customers.sort(new JaccardComparator());
+        Collections.reverse(customers);
         model.addAttribute("customers", customers);
-        return "redirect:/users";
+        return "users";
     }
 
     @GetMapping("/users/popular")
@@ -78,9 +79,9 @@ public class ReviewController {
         customers.remove(current);
 
         customers.sort(new FollowerComparator());
-
+        Collections.reverse(customers);
         model.addAttribute("customers", customers);
-        return "redirect:/users";
+        return "users";
     }
 
     public double jaccardDistance(Customer c1, Customer c2) {

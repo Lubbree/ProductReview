@@ -27,6 +27,7 @@ public class ProductReviewApplication {
 			customer1.setName("Bill");
 			customer1.setEmail("Bill@gmail.com");
 			customer1.setPassword("Bill");
+			customer1.setFollower_Count(customer1.getFollower_Count() + 10);
 			customerRepository.save(customer1);
 
 			Customer customer2 = new Customer();
@@ -34,7 +35,7 @@ public class ProductReviewApplication {
 			customer2.setEmail("Jill@gmail.com");
 			customer2.setPassword("Jill");
 			customer2.addFollowing(customer1);
-			customer1.setFollower_Count(customer1.getFollower_Count() + 1);
+			customer2.setFollower_Count(customer1.getFollower_Count() + 5);
 			customerRepository.save(customer2);
 
 			Customer customer3 = new Customer();
@@ -42,7 +43,7 @@ public class ProductReviewApplication {
 			customer3.setEmail("Tom@gmail.com");
 			customer3.setPassword("Tom");
 			customer3.addFollowing(customer1);
-			customer1.setFollower_Count(customer1.getFollower_Count() + 1);
+			customer3.setFollower_Count(customer1.getFollower_Count() + 2);
 			customerRepository.save(customer3);
 
 			//Products

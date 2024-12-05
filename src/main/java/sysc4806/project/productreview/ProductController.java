@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +43,13 @@ public class ProductController {
         Optional<Product> rawProduct = productRepository.findById(id);
         Product product = rawProduct.get();
         session.setAttribute("currentProduct", product);
+
+        double avg = 0;
+        for (Review review : product.getReviews()) {
+            avg += review.getStarRating();
+        }
+        DecimalFormat numberFormat = new DecimalFormat("#.#");
+        model.addAttribute("stars", numberFormat.format(avg/product.getReviews().size()));
         model.addAttribute("product", product);
         List<Review> reviews = reviewRepository.findByProduct(product);
         model.addAttribute("reviews", reviews);

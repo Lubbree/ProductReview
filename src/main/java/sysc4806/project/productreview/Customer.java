@@ -14,10 +14,8 @@ public class Customer {
 
     private String name;
 
-    @Column()
     private double jaccard_index;
 
-    @Column(nullable = false)
     private int follower_count;
 
     @Column(unique = true, nullable = false)
