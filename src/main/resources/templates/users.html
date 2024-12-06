@@ -25,7 +25,9 @@
         <th>Follow this user?</th>
     </tr>
     <tr th:each="customer: ${customers}">
-        <td th:text="${customer.name}"></td>
+        <td>
+            <a th:href="@{/myReviews/{id}(id=${customer.userId})}" th:text="${customer.name}"></a>
+        </td>
         <td th:text="${customer.follower_Count}"></td>
         <td>
             <a th:href="@{/home/follow}" th:text="Follow"></a>
