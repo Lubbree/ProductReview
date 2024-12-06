@@ -66,6 +66,7 @@ public class ReviewController {
         customers.remove(current);
 
         model.addAttribute("customers", customers);
+        model.addAttribute("loggedInUser", current);
         return "users";
     }
 

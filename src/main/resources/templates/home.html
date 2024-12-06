@@ -43,5 +43,20 @@
         <td th:text="${product.category}"></td>
     </tr>
 </table>
+
+<!-- List of people the user follows -->
+<h2 th:if="${loggedInUser != null}">People You Follow</h2>
+<table th:if="${loggedInUser != null}">
+    <tr>
+        <th>Name</th>
+        <th>Followers</th>
+    </tr>
+    <tr th:each="user : ${loggedInUser.following}">
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.follower_Count}"></td>
+    </tr>
+</table>
+
+
 </body>
 </html>

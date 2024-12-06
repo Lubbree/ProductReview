@@ -19,11 +19,13 @@ public class ProductController {
 
     private final ProductRepository productRepository;
     private final ReviewRepository reviewRepository;
+    private final CustomerRepository customerRepository;
 
     public ProductController(ProductRepository productRepository,
-                             ReviewRepository reviewRepository) {
+                             ReviewRepository reviewRepository, CustomerRepository customerRepository) {
         this.productRepository = productRepository;
         this.reviewRepository = reviewRepository;
+        this.customerRepository = customerRepository;
     }
 
     @GetMapping("/home")
@@ -81,6 +83,17 @@ public class ProductController {
     @GetMapping("/home/logout")
     public String logout(HttpSession session) {
         session.invalidate(); // Clear the session
+        return "redirect:/home";
+    }
+
+    @GetMapping("/home/follow")
+    public String follow(@RequestParam("id") Long id, HttpSession session, Model model) {
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+        Optional<Customer> rawCustomer = customerRepository.findById(id);
+        Customer followedUser = rawCustomer.get();
+        loggedInUser.addFollowing(followedUser);
+
+        model.addAttribute("loggedInUser", loggedInUser);
         return "redirect:/home";
     }
 

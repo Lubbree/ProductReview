@@ -114,8 +114,10 @@ public class Customer {
     }
 
     public void addFollowing(Customer customer) {
-        following.add(customer);
-        customer.getFollowing().add(this);
+        if(!following.contains(customer)) {
+            following.add(customer);
+            customer.getFollowing().add(this);
+        }
     }
 
     public void removeFollowing(Customer customer) {
