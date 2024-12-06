@@ -66,6 +66,7 @@ public class ReviewController {
 
         model.addAttribute("following", current.getFollowing());
         model.addAttribute("customers", customers);
+        model.addAttribute("loggedInUser", current);
         return "users";
     }
 
