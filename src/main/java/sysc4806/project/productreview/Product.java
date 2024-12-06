@@ -14,6 +14,7 @@ public class Product {
     private String name;
     private String category;
     private String description;
+    private String stars;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Review> reviews = new ArrayList<>();
@@ -59,4 +60,8 @@ public class Product {
     }
 
     public Long getId() {return id;}
+
+    public String getStars() {return stars;}
+
+    public void setStars(String stars) {this.stars = stars;}
 }

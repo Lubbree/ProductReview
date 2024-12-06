@@ -29,18 +29,33 @@
     </span>
 </nav>
 
+
 <h1>Product List</h1>
 <!-- Product list table -->
+<form action="#" th:action="@{/home}" th:method="get">
+    <button type="submit" >Sort by Default</button>
+</form>
+<form action="#" th:action="@{/home/rating}" th:method="get">
+    <button type="submit" >Sort by Star Rating</button>
+</form>
+<span th:if="${loggedInUser != null}">
+    <form action="#" th:action="@{/home/userrating}" th:method="get">
+        <button type="submit" >Sort by Follower's Star Rating</button>
+    </form>
+</span>
+
 <table>
     <tr>
         <th>Name</th>
         <th>Category</th>
+        <th>Average Stars</th>
     </tr>
     <tr th:each="product: ${products}">
         <td>
             <a th:href="@{/home/product/{id}(id=${product.id})}" th:text="${product.name}"></a>
         </td>
         <td th:text="${product.category}"></td>
+        <td th:text="${product.stars}"></td>
     </tr>
 </table>
 
@@ -56,7 +71,5 @@
         <td th:text="${user.follower_Count}"></td>
     </tr>
 </table>
-
-
 </body>
 </html>
