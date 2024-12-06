@@ -153,7 +153,7 @@ public class ProductController {
         customerRepository.save(loggedInUser);
         customerRepository.save(followedUser);
 
-        model.addAttribute("loggedInUser", loggedInUser);
+        session.setAttribute("loggedInUser", customerRepository.findById(loggedInUser.getUserId()).orElse(null));
         return "redirect:/home";
     }
 

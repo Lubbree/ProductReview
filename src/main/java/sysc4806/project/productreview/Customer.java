@@ -27,6 +27,7 @@ public class Customer {
     @Column(nullable = false)
     private String password; // Securely store password (we'll hash it in the service layer)
 
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_follows",
