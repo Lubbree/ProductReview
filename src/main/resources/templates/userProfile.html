@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+</head>
+<body>
+<form action="#" th:action="@{/users}" th:method="get">
+    <button type="submit">Back to Users</button>
+</form>
+
+<h1 th:text="${user.name} + ' Profile'"></h1>
+<p>Followers: <span th:text="${user.follower_Count}"></span></p>
+
+<h2>Reviews</h2>
+<table>
+    <tr>
+        <th>Product</th>
+        <th>Rating</th>
+        <th>Review</th>
+        <th>Date</th>
+    </tr>
+    <tr th:each="review : ${reviews}">
+        <td th:text="${review.product.name}"></td>
+        <td th:text="${review.starRating}"></td>
+        <td th:text="${review.reviewText}"></td>
+        <td th:text="${#temporals.format(review.reviewDate, 'yyyy-MM-dd')}"></td>
+    </tr>
+</table>
+
+</body>
+</html>

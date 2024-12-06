@@ -104,4 +104,23 @@ public class ReviewController {
     public static void sortReviews(List<Review> review){
         review.sort(Comparator.comparing(Review::getId));
     }
+
+    @GetMapping("/users/{id}/profile")
+    public String viewUserProfile(@PathVariable Long id, Model model) {
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+
+        if (customerOptional.isEmpty()) {
+            model.addAttribute("error", "User not found");
+            return "error";
+        }
+
+        Customer customer = customerOptional.get();
+        List<Review> reviews = reviewRepository.findByReviewer(customer);
+
+        model.addAttribute("user", customer);
+        model.addAttribute("reviews", reviews);
+
+        return "userProfile";
+    }
+
 }

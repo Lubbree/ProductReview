@@ -6,16 +6,16 @@
 </head>
 <body>
 <form action="#" th:action="@{/home}" th:method="get">
-    <button type="submit" >Back to Home Page</button>
+    <button type="submit">Back to Home Page</button>
 </form>
 
 <h1>User List</h1>
 
 <form action="#" th:action="@{/users/jaccard}" th:method="get">
-    <button type="submit" >Sort by Jaccard Distance</button>
+    <button type="submit">Sort by Jaccard Distance</button>
 </form>
 <form action="#" th:action="@{/users/popular}" th:method="get">
-    <button type="submit" >Sort by Most Followers</button>
+    <button type="submit">Sort by Most Followers</button>
 </form>
 
 <table>
@@ -25,7 +25,9 @@
         <th>Follow this user?</th>
     </tr>
     <tr th:each="customer: ${customers}">
-        <td th:text="${customer.name}"></td>
+        <td>
+            <a th:href="@{/users/{id}/profile(id=${customer.userId})}" th:text="${customer.name}"></a>
+        </td>
         <td th:text="${customer.follower_Count}"></td>
         <td>
             <a th:href="@{/home/follow}" th:text="Follow"></a>

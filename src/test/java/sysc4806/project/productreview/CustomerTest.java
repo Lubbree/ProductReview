@@ -115,4 +115,29 @@ public class CustomerTest {
         testReviews = new ArrayList<>(customer.getReviews());
         assertEquals(new ArrayList<>(), testReviews);
     }
+
+    @Test
+    public void testUniqueEmailConstraint() {
+        customer.createAccount("test", "unique@example.com", "password123");
+        assertThrows(IllegalArgumentException.class, () -> {
+            Customer duplicateCustomer = new Customer();
+            duplicateCustomer.createAccount("matt", "unique@example.com", "password1234");
+        });
+    }
+
+    @Test
+    public void testSetInvalidEmail() {
+        assertThrows(IllegalArgumentException.class, () -> customer.setEmail(""));
+        assertThrows(IllegalArgumentException.class, () -> customer.setEmail(null));
+        assertThrows(IllegalArgumentException.class, () -> customer.setEmail("invalidemail"));
+    }
+
+    @Test
+    public void testSetAndGetFollowerCount() {
+        customer.setFollower_Count(10);
+        assertEquals(10, customer.getFollower_Count());
+    }
+
+
+
 }
