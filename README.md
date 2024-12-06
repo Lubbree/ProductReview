@@ -54,6 +54,21 @@ Objectives for next milestone:
 - Implement ability to list users by parameters such as most followers, following, and degree of separation
 - Improve webpage visuals via functionality such as headers, footers, images, etc.
 
+### Milestone 3
+
+Timeline: Started 2024-11-26, Completed 2024-12-06
+
+Functionality added:
+- Review functionality was completed, users can leave persistent reviews
+- Added ability to follow other users, an associated follower count, and corresponding html elements to view following
+- Implemented buttons for sorting products by default, average star rating, and average star rating of users you follow
+- Added sorting mechanisms for users and reviews to sort by defaults, jaccard distance (similarity), and most followers
+- Degree of separation calculation is performed and displayed beside all users
+- Added many new tests for individual classes, integration, and endpoints (POST)
+- Implemented basic users, products, and reviews for testing purposes
+- Fixed bugs associated with html pages and backend behaviour
+- Completed all associated documentation including the database schema and UML diagram
+
 ## Package Structure
 
 - **Customer**: Represents a user who can follow other users and leave reviews on products.
@@ -68,18 +83,16 @@ Represents a user who can follow other users and leave reviews on products.
 
 - **Fields**:
   - `id` (Long): Primary key, auto-generated.
-  - `userId` (String): Unique identifier for each user.
-  - `name` (String): User's name.
+  - `name` (String): Customer's name.
+  - `jaccard_index` (double): Represents the jaccard index in relation to the current user of the system. Periodically updated.
+  - `follower_count` (int): Follower count of the customer.
+  - `email` (String): Unique non-null email utilized for the login credentials.
+  - `password` (String): Non-null password associated with the customer login.
   - `following` (Set<Customer>): Set of customers that this customer is following.
   - `reviews` (Set<Review>): Set of reviews this customer has made.
 - **Relationships**:
   - Many-to-many relationship with other `Customer` entities through a join table (`user_follows`) to represent following relationships.
   - One-to-many relationship with `Review` entities, where a `Customer` can have multiple reviews.
-- **Methods**:
-  - `addFollowing(Customer customer)`: Adds a customer to the following set.
-  - `removeFollowing(Customer customer)`: Removes a customer from the following set.
-  - `addReview(Review review)`: Associates a review with the customer.
-  - `removeReview(Review review)`: Disassociates a review from the customer.
 
 ### Product
 
@@ -87,15 +100,14 @@ Represents a product available for review.
 
 - **Fields**:
   - `id` (Long): Primary key, auto-generated.
-  - `productId` (String): Unique identifier for each product.
   - `name` (String): Name of the product.
   - `category` (String): Product category.
+  - `description` (String): Link to the website containing the product.
+  - `stars` (String): Average rating of the product on the site for display purposes.
   - `reviews` (List<Review>): List of reviews associated with this product.
 - **Relationships**:
   - One-to-many relationship with `Review` entities, where a `Product` can have multiple reviews.
-- **Methods**:
-  - `addReview(Review review)`: Associates a review with the product.
-  - `removeReview(Review review)`: Disassociates a review from the product.
+
 
 ### Review
 
@@ -108,6 +120,7 @@ Represents a review of a product left by a customer, including a rating, text, a
   - `starRating` (int): The rating given to the product, on a scale (e.g., 1-5).
   - `reviewText` (String): Textual content of the review.
   - `reviewDate` (LocalDateTime): Timestamp of when the review was created.
+  - `jaccard_index` (double): Represents the jaccard index in relation to the current user of the system for sorting purposes.
 - **Relationships**:
   - Many-to-one relationship with `Customer` (each review has one customer).
   - Many-to-one relationship with `Product` (each review relates to one product).
@@ -120,17 +133,12 @@ deletes added elements once a session has been finished for testing and storage 
 
 Primary keys are represented by an underline, and foreign keys contain an arrow associated with their respective primary keys.
 
-![SYSC4806 Database Schema M2](https://github.com/user-attachments/assets/7bf58510-7299-497b-bf97-96ac8ccb44f7)
-
+![Milestone3 Database Schema](https://github.com/user-attachments/assets/c5d2d752-9c8d-40f3-a3dd-5e873fb15e61)
 
 ## UML Diagram
 
-This UML Diagram represents the application as of Milestone 2. The diagram will be updated periodically to accound for  any new
-classes, attributes and methods implemented alongside commits.
+This UML Diagram represents the application as of Milestone 3. The diagram represents an internal view of the system with arrows 
+for class relations. This diagram models the internal functionality of the system and does not include html pages.
 
-![UML drawio](https://github.com/user-attachments/assets/9017ceb6-e69c-485d-a5f7-1555923f1bcf)
-
-
-
-
+![Milestone3 UML Diagram](https://github.com/user-attachments/assets/6f85be45-26ad-4a24-89b2-270c20110dec)
 

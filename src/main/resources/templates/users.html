@@ -38,6 +38,7 @@
     <tr>
         <th>Name</th>
         <th>Followers</th>
+        <th>Distance</th>
         <th>Follow this user?</th>
     </tr>
     <tr th:each="customer: ${customers}">
@@ -47,10 +48,17 @@
             </td>
             <td th:text="${customer.follower_Count}"></td>
             <td>
-                <!-- Check if the logged-in user is already following this customer -->
+                <span th:if="${distanceMap.containsKey(customer.getUserId())}">
+                    <p th:text="${distanceMap.get(customer.getUserId())}" style="margin: 0" />
+                </span>
+            </td>
+            <td>
                 <span th:if="${!loggedInUser.isFollowing(customer)}">
-                    <a th:href="@{/home/follow(id=${customer.userId})}"
-                       th:text="'Follow'"></a>
+                    <a th:href="@{/home/follow(id=${customer.userId})}" th:text="'Follow'"></a>
+                </span>
+                <!-- Show "Unfollow" if the user is already following the customer -->
+                <span th:if="${loggedInUser.isFollowing(customer)}">
+                    <a th:href="@{/home/unfollow(id=${customer.userId})}" th:text="'Unfollow'"></a>
                 </span>
             </td>
         </span>
@@ -58,3 +66,4 @@
 </table>
 </body>
 </html>
+
