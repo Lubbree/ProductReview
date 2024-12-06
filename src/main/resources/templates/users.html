@@ -28,6 +28,7 @@
         <td>
             <a th:href="@{/users/{id}/profile(id=${customer.userId})}" th:text="${customer.name} + ' Profile'"></a>
             <br />
+            <a th:href="@{/myReviews/{id}(id=${customer.userId})}" th:text="${customer.name}"></a>
         </td>
         <td th:text="${customer.follower_Count}"></td>
         <td>

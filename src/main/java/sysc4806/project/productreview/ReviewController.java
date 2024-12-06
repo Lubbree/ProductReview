@@ -19,9 +19,21 @@ public class ReviewController {
         this.customerRepository = customerRepository;
     }
 
-    @GetMapping("/myReviews")
-    public String showReviews(Model model, HttpSession session) {
+    @GetMapping("/myReviews/{id}")
+    public String showOtherReviews(@PathVariable long id, Model model) {
+        Optional<Customer> rawCustomer = customerRepository.findById(id);
+        Customer customer = rawCustomer.get();
+        model.addAttribute("customer", customer);
+        List<Review> reviews = reviewRepository.findByReviewer(customer);
+        model.addAttribute("reviews", reviews);
+
+        return "myReviews";
+    }
+
+    @GetMapping("/myReviews/user")
+    public String showUserReviews(Model model, HttpSession session) {
         Customer customer = (Customer) session.getAttribute("loggedInUser");
+        model.addAttribute("customer", customer);
         List<Review> reviews = reviewRepository.findByReviewer(customer);
         model.addAttribute("reviews", reviews);
         return "myReviews";
