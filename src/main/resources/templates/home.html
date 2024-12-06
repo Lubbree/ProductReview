@@ -67,7 +67,9 @@
         <th>Followers</th>
     </tr>
     <tr th:each="user : ${loggedInUser.following}">
-        <td th:text="${user.name}"></td>
+        <td>
+            <a th:href="@{/myReviews/{id}(id=${user.userId})}" th:text="${user.name}"></a>
+        </td>
         <td th:text="${user.follower_Count}"></td>
     </tr>
 </table>
