@@ -59,5 +59,5 @@ public class Review {
 
     public double getJaccard_index() {return jaccard_index;}
 
-    public void setJaccard_index(double jaccard_index) {}
+    public void setJaccard_index(double jaccard_index) {this.jaccard_index = jaccard_index;}
 }
