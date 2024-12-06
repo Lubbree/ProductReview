@@ -97,6 +97,22 @@ public class ReviewController {
         return "users";
     }
 
+
+    @GetMapping("/home/follow")
+    public String follow(@RequestParam("id") Long id, HttpSession session, Model model) {
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+        Optional<Customer> rawCustomer = customerRepository.findById(id);
+        Customer followedUser = rawCustomer.get();
+
+        if(!loggedInUser.getFollowing().contains(followedUser)) {
+            loggedInUser.addFollowing(followedUser);
+        }
+
+        model.addAttribute("loggedInUser", loggedInUser);
+        return "redirect:/home";
+    }
+
+
     public double jaccardDistance(Customer c1, Customer c2) {
         List<Review> c1Reviews = new ArrayList<>(c1.getReviews());
         List<Review> c2Reviews = new ArrayList<>(c2.getReviews());
