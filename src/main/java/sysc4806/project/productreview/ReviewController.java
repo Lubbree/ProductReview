@@ -134,7 +134,6 @@ public class ReviewController {
             for (Customer c: currentRow) {
                 if (!map.containsKey(c.getUserId())) {
                     map.put(c.getUserId(), distance);
-                    System.out.println(c.getName() + ":" + distance);
                     nextRow.add(c);
                 }
             }
