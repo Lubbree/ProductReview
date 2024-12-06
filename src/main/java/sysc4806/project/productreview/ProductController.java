@@ -1,7 +1,10 @@
 package sysc4806.project.productreview;
 
+import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -142,13 +145,17 @@ public class ProductController {
         return "redirect:/home";
     }
 
-
+    @Transactional
     @GetMapping("/home/unfollow")
     public String unfollow(@RequestParam("id") Long id, HttpSession session, Model model){
         Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
         Optional<Customer> rawCustomer = customerRepository.findById(id);
         Customer followedUser = rawCustomer.get();
         loggedInUser.removeFollowing(followedUser);
+
+        if(!(loggedInUser.isFollowing(followedUser))) {
+            followedUser.setFollower_Count(followedUser.getFollower_Count() - 1);
+        }
 
         customerRepository.save(loggedInUser);
         customerRepository.save(followedUser);

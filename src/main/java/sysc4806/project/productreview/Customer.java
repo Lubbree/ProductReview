@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -134,10 +135,32 @@ public class Customer {
     }
 
     public void removeFollowing(Customer customer) {
-        if (this.isFollowing(customer)) {
-            following.remove(customer);
+        Customer toRemove = null;
+        for (Customer c : following) {
+            if (c.equals(customer)) { // Relies on equals() implementation
+                toRemove = c;
+                break;
+            }
+        }
+        if (toRemove != null) {
+            following.remove(toRemove); // Explicit removal
             customer.getFollowing().remove(this);
         }
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return Objects.equals(id, customer.id); // Compare by unique ID
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id); // Use unique ID for hash
+    }
+
 
 }
