@@ -142,7 +142,7 @@ public class ProductController {
         customerRepository.save(followedUser);
 
         model.addAttribute("loggedInUser", loggedInUser);
-        return "redirect:/home";
+        return "redirect:/users";
     }
 
     @Transactional
@@ -161,7 +161,7 @@ public class ProductController {
         customerRepository.save(followedUser);
 
         session.setAttribute("loggedInUser", customerRepository.findById(loggedInUser.getUserId()).orElse(null));
-        return "redirect:/home";
+        return "redirect:/users";
     }
 
     @GetMapping("/home/rating")
