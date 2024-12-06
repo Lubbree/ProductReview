@@ -84,13 +84,6 @@ public class ProductController {
         return "redirect:/home";
     }
 
-    @GetMapping("/accountInfo")
-    public String accountInfo(Model model, HttpSession session) {
-        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
-        model.addAttribute("customerInfo", loggedInUser);
-        return "accountInfo";
-    }
-
 //    @PostConstruct
 //    public void init(){
 //        Product product1 = new Product();

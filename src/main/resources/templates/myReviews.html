@@ -6,16 +6,26 @@
 </head>
 <body>
 <!-- Navigation links -->
-<a th:href="@{/home}">Back to Home</a>
-
+<form action="#" th:action="@{/home}" th:method="get">
+    <button type="submit" >Back to Home Page</button>
+</form>
+<br/>
+<span>
+    Account name: <span th:text="${customer.name}"></span>
+<br/>
+</span>
 <h1>Review List</h1>
 <!-- Product list table -->
 <table>
     <tr>
+        <th>Product Name</th>
         <th>Star Rating</th>
         <th>Review Description</th>
     </tr>
     <tr th:each="review: ${reviews}">
+        <td>
+            <a th:href="@{/home/product/{id}(id=${review.product.id})}" th:text="${review.product.name}"></a>
+        </td>
         <td th:text="${review.starRating}"></td>
         <td th:text="${review.reviewText}"></td>
     </tr>
