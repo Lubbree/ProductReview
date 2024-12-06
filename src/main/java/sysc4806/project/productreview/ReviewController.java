@@ -104,7 +104,6 @@ public class ReviewController {
         HashSet<Review> s1Reviews = new HashSet<>(c1.getReviews());
         HashSet<Review> s2Reviews = new HashSet<>(c2.getReviews());
 
-        System.out.println(1.0 - jaccard_index(s1Reviews, s2Reviews));
         return 1.0 - jaccard_index(s1Reviews, s2Reviews);
     }
 
@@ -112,14 +111,10 @@ public class ReviewController {
         HashSet<Review> intersect = new HashSet<>();
         for (Review n : a) {
             for (Review r : b){
-                System.out.println("Star rating of user: " + n.getStarRating());
-                System.out.println("Star rating of other: " + r.getStarRating());
                 if (r.getStarRating() == n.getStarRating()){
                     if (Objects.equals(r.getProduct().getId(), n.getProduct().getId())){
                         intersect.add(n);
                     }
-                    System.out.println("User id: " + n.getProduct().getId());
-                    System.out.println("Other id: " + r.getProduct().getId());
                 }
             }
         }
@@ -135,10 +130,7 @@ public class ReviewController {
 
         // Calculate the Jaccard index
         // using the formula
-        System.out.println("Intersect size: " + size_in);
-        System.out.println("Union size: " + (float)(size_s1 + size_s2 - size_in));
         double jaccard_in  = (float) size_in / (float)(size_s1 + size_s2 - size_in);
-        System.out.println("jaccard index" + jaccard_in);
         return jaccard_in;
     }
 
