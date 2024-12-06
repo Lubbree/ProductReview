@@ -63,8 +63,8 @@ public class ReviewController {
     public String showUsers(Model model, HttpSession session) {
         List<Customer> customers = (List<Customer>) customerRepository.findAll();
         Customer current = (Customer) session.getAttribute("loggedInUser");
-        customers.remove(current);
 
+        model.addAttribute("following", current.getFollowing());
         model.addAttribute("customers", customers);
         return "users";
     }
@@ -73,7 +73,8 @@ public class ReviewController {
     public String showJaccardUsers(Model model, HttpSession session) {
         List<Customer> customers = (List<Customer>) customerRepository.findAll();
         Customer current = (Customer) session.getAttribute("loggedInUser");
-        customers.remove(current);
+        model.addAttribute("following", current.getFollowing());
+
         for (Customer customer : customers) {
             customer.setJaccard_Index(jaccardDistance(current, customer));
         }
@@ -89,6 +90,7 @@ public class ReviewController {
         List<Customer> customers = (List<Customer>) customerRepository.findAll();
         Customer current = (Customer) session.getAttribute("loggedInUser");
         customers.remove(current);
+        model.addAttribute("following", current.getFollowing());
 
         customers.sort(new FollowerComparator());
         Collections.reverse(customers);
@@ -96,7 +98,7 @@ public class ReviewController {
         return "users";
     }
 
-    public double jaccardDistance(Customer c1, Customer c2) {
+    public static double jaccardDistance(Customer c1, Customer c2) {
         List<Review> c1Reviews = new ArrayList<>(c1.getReviews());
         List<Review> c2Reviews = new ArrayList<>(c2.getReviews());
 

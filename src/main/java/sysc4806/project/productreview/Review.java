@@ -21,6 +21,7 @@ public class Review {
     private int starRating;
     private String reviewText;
     private LocalDateTime reviewDate;
+    private double jaccard_index;
 
     public void setReviewer(Customer reviewer) {
         this.reviewer = reviewer;
@@ -55,4 +56,8 @@ public class Review {
     public Long getId() {return id;}
 
     public void setId(Long id) {this.id = id;}
+
+    public double getJaccard_index() {return jaccard_index;}
+
+    public void setJaccard_index(double jaccard_index) {}
 }
