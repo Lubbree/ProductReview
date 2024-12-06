@@ -133,6 +133,10 @@ public class ProductController {
         Optional<Customer> rawCustomer = customerRepository.findById(id);
         Customer followedUser = rawCustomer.get();
         loggedInUser.addFollowing(followedUser);
+        if(loggedInUser.isFollowing(followedUser)) {
+            followedUser.setFollower_Count(followedUser.getFollower_Count() + 1);
+        }
+        customerRepository.save(followedUser);
 
         model.addAttribute("loggedInUser", loggedInUser);
         return "redirect:/home";

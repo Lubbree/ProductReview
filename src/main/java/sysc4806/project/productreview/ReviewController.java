@@ -63,10 +63,12 @@ public class ReviewController {
     public String showUsers(Model model, HttpSession session) {
         List<Customer> customers = (List<Customer>) customerRepository.findAll();
         Customer current = (Customer) session.getAttribute("loggedInUser");
+        Map<Long, Integer> distanceMap = distance(current);
 
         model.addAttribute("following", current.getFollowing());
         model.addAttribute("customers", customers);
         model.addAttribute("loggedInUser", current);
+        model.addAttribute("distanceMap", distanceMap);
         return "users";
     }
 
@@ -74,6 +76,7 @@ public class ReviewController {
     public String showJaccardUsers(Model model, HttpSession session) {
         List<Customer> customers = (List<Customer>) customerRepository.findAll();
         Customer current = (Customer) session.getAttribute("loggedInUser");
+        Map<Long, Integer> distanceMap = distance(current);
         model.addAttribute("following", current.getFollowing());
 
         for (Customer customer : customers) {
@@ -84,6 +87,7 @@ public class ReviewController {
         Collections.reverse(customers);
         model.addAttribute("customers", customers);
         model.addAttribute("loggedInUser", current);
+        model.addAttribute("distanceMap", distanceMap);
         return "users";
     }
 
@@ -91,6 +95,7 @@ public class ReviewController {
     public String showPopularUsers(Model model, HttpSession session) {
         List<Customer> customers = (List<Customer>) customerRepository.findAll();
         Customer current = (Customer) session.getAttribute("loggedInUser");
+        Map<Long, Integer> distanceMap = distance(current);
         customers.remove(current);
         model.addAttribute("following", current.getFollowing());
 
@@ -98,6 +103,7 @@ public class ReviewController {
         Collections.reverse(customers);
         model.addAttribute("customers", customers);
         model.addAttribute("loggedInUser", current);
+        model.addAttribute("distanceMap", distanceMap);
         return "users";
     }
 
@@ -116,6 +122,33 @@ public class ReviewController {
         int union = temp.size();
 
         return ((double) intersection / union);
+    }
+
+    public static Map<Long, Integer> distance(Customer customer) {
+        Map<Long, Integer> map = new HashMap<>();
+        map.put(customer.getUserId(), 0);
+        List<Customer> currentRow = new ArrayList<>(customer.getFollowing());
+        int distance = 1;
+        while (!currentRow.isEmpty()) {
+            List<Customer> nextRow = new ArrayList<>();
+            for (Customer c: currentRow) {
+                if (!map.containsKey(c.getUserId())) {
+                    map.put(c.getUserId(), distance);
+                    nextRow.add(c);
+                }
+            }
+            currentRow = new ArrayList<>();
+            for (Customer c: nextRow) {
+                for (Customer following: c.getFollowing()) {
+                    if (!map.containsKey(following.getUserId())) {
+                        currentRow.add(following);
+                    }
+                }
+            }
+            distance += 1;
+        }
+
+        return map;
     }
 
     public static void sortReviews(List<Review> review){
