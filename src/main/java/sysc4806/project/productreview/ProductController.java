@@ -95,7 +95,6 @@ public class ProductController {
             double s2 = r2.getJaccard_index() * 100;
             return (int) (s1 - s2);
         });
-        Collections.reverse(reviews);
 
         model.addAttribute("reviews", reviews);
         return "product";
@@ -195,6 +194,7 @@ public class ProductController {
             double s2 = Double.parseDouble(p2.getStars()) * 100;
             return (int) (s1 - s2);
         });
+
         Collections.reverse(products);
         model.addAttribute("products", products);
 
