@@ -15,7 +15,7 @@
     <li>Product Name: <span th:text="${product.getName()}"></span></li>
     <li>Product Category: <span th:text="${product.getCategory()}"></span></li>
     <li>Product Description: <span th:text="${product.getDescription()}"></span></li>
-      <li>Average Star Rating: <span th:text="${stars}"></span></li>
+      <li>Average Star Rating: <span th:text="${product.getStars()}"></span></li>
   </ul>
 
 <div th:if="${loggedInUser != null}">

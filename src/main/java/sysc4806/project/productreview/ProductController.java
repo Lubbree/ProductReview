@@ -30,8 +30,17 @@ public class ProductController {
 
     @GetMapping("/home")
     public String home(Model model, HttpSession session) {
-        model.addAttribute("products", productRepository.findAll());
+        List<Product> products = (List<Product>) productRepository.findAll();
+        for (Product product : products) {
+            double avg = 0;
+            for (Review review : product.getReviews()) {
+                avg += review.getStarRating();
+            }
+            DecimalFormat numberFormat = new DecimalFormat("#.#");
+            product.setStars(numberFormat.format(avg/product.getReviews().size()));
+        }
 
+        model.addAttribute("products", products);
         Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
         model.addAttribute("loggedInUser", loggedInUser);
 
@@ -50,8 +59,9 @@ public class ProductController {
         for (Review review : product.getReviews()) {
             avg += review.getStarRating();
         }
+
         DecimalFormat numberFormat = new DecimalFormat("#.#");
-        model.addAttribute("stars", numberFormat.format(avg/product.getReviews().size()));
+        product.setStars(numberFormat.format(avg/product.getReviews().size()));
         model.addAttribute("product", product);
         List<Review> reviews = reviewRepository.findByProduct(product);
         model.addAttribute("reviews", reviews);
@@ -74,7 +84,7 @@ public class ProductController {
         }
 
         DecimalFormat numberFormat = new DecimalFormat("#.#");
-        model.addAttribute("stars", numberFormat.format(avg/product.getReviews().size()));
+        product.setStars(numberFormat.format(avg/product.getReviews().size()));
         model.addAttribute("product", product);
         List<Review> reviews = reviewRepository.findByProduct(product);
         for (Review review : reviews) {
@@ -126,5 +136,66 @@ public class ProductController {
 
         model.addAttribute("loggedInUser", loggedInUser);
         return "redirect:/home";
+    }
+
+    @GetMapping("/home/rating")
+    public String homeRating(Model model, HttpSession session) {
+        List<Product> products = (List<Product>) productRepository.findAll();
+        for (Product product : products) {
+            double avg = 0;
+            for (Review review : product.getReviews()) {
+                avg += review.getStarRating();
+            }
+            DecimalFormat numberFormat = new DecimalFormat("#.#");
+            product.setStars(numberFormat.format(avg / product.getReviews().size()));
+        }
+        products.sort((p1, p2) -> {
+            double s1 = Double.parseDouble(p1.getStars()) * 100;
+            double s2 = Double.parseDouble(p2.getStars()) * 100;
+            return (int) (s1 - s2);
+        });
+        Collections.reverse(products);
+        model.addAttribute("products", products);
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+        model.addAttribute("loggedInUser", loggedInUser);
+
+        session.removeAttribute("currentProduct");
+
+        return "home";
+    }
+
+    @GetMapping("/home/userrating")
+    public String homeUserRating(Model model, HttpSession session) {
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+        model.addAttribute("loggedInUser", loggedInUser);
+        List<Product> products = (List<Product>) productRepository.findAll();
+        for (Product product : products) {
+            double avg = 0;
+            int numReviews = 0;
+            for (Review review : product.getReviews()) {
+                if (loggedInUser.isFollowing(review.getReviewer())) {
+                    avg += review.getStarRating();
+                    numReviews++;
+                }
+            }
+            if (avg != 0) {
+                DecimalFormat numberFormat = new DecimalFormat("#.#");
+                product.setStars(numberFormat.format(avg / numReviews));
+            } else {
+                product.setStars("0");
+            }
+        }
+
+        products.sort((p1, p2) -> {
+            double s1 = Double.parseDouble(p1.getStars()) * 100;
+            double s2 = Double.parseDouble(p2.getStars()) * 100;
+            return (int) (s1 - s2);
+        });
+        Collections.reverse(products);
+        model.addAttribute("products", products);
+
+        session.removeAttribute("currentProduct");
+
+        return "home";
     }
 }
