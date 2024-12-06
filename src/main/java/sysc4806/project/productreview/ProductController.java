@@ -138,6 +138,21 @@ public class ProductController {
         return "redirect:/home";
     }
 
+
+    @GetMapping("/home/unfollow")
+    public String unfollow(@RequestParam("id") Long id, HttpSession session, Model model){
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+        Optional<Customer> rawCustomer = customerRepository.findById(id);
+        Customer followedUser = rawCustomer.get();
+        loggedInUser.removeFollowing(followedUser);
+
+        customerRepository.save(loggedInUser);
+        customerRepository.save(followedUser);
+
+        model.addAttribute("loggedInUser", loggedInUser);
+        return "redirect:/home";
+    }
+
     @GetMapping("/home/rating")
     public String homeRating(Model model, HttpSession session) {
         List<Product> products = (List<Product>) productRepository.findAll();

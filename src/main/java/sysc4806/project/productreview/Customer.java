@@ -133,7 +133,10 @@ public class Customer {
     }
 
     public void removeFollowing(Customer customer) {
-        following.remove(customer);
-        customer.getFollowing().remove(this);
+        if (this.isFollowing(customer)) {
+            following.remove(customer);
+            customer.getFollowing().remove(this);
+        }
     }
+
 }
