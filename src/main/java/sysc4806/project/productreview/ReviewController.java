@@ -83,6 +83,7 @@ public class ReviewController {
         customers.sort(new JaccardComparator());
         Collections.reverse(customers);
         model.addAttribute("customers", customers);
+        model.addAttribute("loggedInUser", current);
         return "users";
     }
 
@@ -96,6 +97,7 @@ public class ReviewController {
         customers.sort(new FollowerComparator());
         Collections.reverse(customers);
         model.addAttribute("customers", customers);
+        model.addAttribute("loggedInUser", current);
         return "users";
     }
 

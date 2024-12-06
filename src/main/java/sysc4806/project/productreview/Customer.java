@@ -113,11 +113,23 @@ public class Customer {
         return this.following;
     }
 
-    public void addFollowing(Customer customer) {
-        if(!following.contains(customer)) {
-            following.add(customer);
-            customer.getFollowing().add(this);
+    public boolean isFollowing(Customer customer) {
+        for( Customer c : following ) {
+            if (c.getUserId().equals(customer.getUserId())){
+                return true;
+            }
         }
+        return false;
+    }
+
+    public void addFollowing(Customer customer) {
+        for( Customer c : following ) {
+            if (c.getUserId().equals(customer.getUserId())){
+                return;
+            }
+        }
+        following.add(customer);
+        customer.getFollowing().add(this);
     }
 
     public void removeFollowing(Customer customer) {

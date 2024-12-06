@@ -48,10 +48,10 @@
             <td th:text="${customer.follower_Count}"></td>
             <td>
                 <!-- Check if the logged-in user is already following this customer -->
-                <span th:if="${loggedInUser.following.contains(customer)}">Following</span>
-                <a th:if="${!loggedInUser.following.contains(customer)}"
-                   th:href="@{/home/follow(id=${customer.userId})}"
-                   th:text="'Follow'"></a>
+                <span th:if="${!loggedInUser.isFollowing(customer)}">
+                    <a th:href="@{/home/follow(id=${customer.userId})}"
+                       th:text="'Follow'"></a>
+                </span>
             </td>
         </span>
     </tr>
