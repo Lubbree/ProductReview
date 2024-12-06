@@ -26,7 +26,8 @@
     </tr>
     <tr th:each="customer: ${customers}">
         <td>
-            <a th:href="@{/users/{id}/profile(id=${customer.userId})}" th:text="${customer.name}"></a>
+            <a th:href="@{/users/{id}/profile(id=${customer.userId})}" th:text="${customer.name} + ' Profile'"></a>
+            <br />
         </td>
         <td th:text="${customer.follower_Count}"></td>
         <td>
