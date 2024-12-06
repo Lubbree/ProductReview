@@ -47,7 +47,6 @@
             </td>
             <td th:text="${customer.follower_Count}"></td>
             <td>
-                <!-- Check if the logged-in user is already following this customer -->
                 <span th:if="${!loggedInUser.isFollowing(customer)}">
                     <a th:href="@{/home/follow(id=${customer.userId})}"
                        th:text="'Follow'"></a>
@@ -58,3 +57,4 @@
 </table>
 </body>
 </html>
+
