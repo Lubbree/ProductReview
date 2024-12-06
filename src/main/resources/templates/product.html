@@ -28,10 +28,17 @@
   <p><strong>Note:</strong> You must <a th:href="@{/home/login}">log in</a> to write a review.</p>
 </div>
 
+<form action="#" th:action="@{/home/product/{id}(id=${product.id})}" th:method="get">
+    <button type="submit" >Sort by Default</button>
+</form>
+<form action="#" th:action="@{/home/product/{id}/jaccard(id=${product.id})}" th:method="get">
+    <button type="submit" >Sort by Similarity</button>
+</form>
+
 <h2>Reviews:</h2>
 <div th:each="review: ${reviews}">
     <details>
-        <summary th:text="${review.reviewer.name + ' gave this product ' + review.starRating} + ' stars'"></summary>
+        <summary th:href="@{/myReviews/{id}(id=${review.reviewer.userId})}" th:text="${review.reviewer.name + ' gave this product ' + review.starRating} + ' stars'"></summary>
         <p th:text="${review.reviewText}"></p>
     </details>
 </div>

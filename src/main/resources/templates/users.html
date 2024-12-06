@@ -9,7 +9,23 @@
     <button type="submit" >Back to Home Page</button>
 </form>
 
-<h1>User List</h1>
+<span th:if="${following.size() > 0}">
+    <h2>Following</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Followers</th>>
+            </tr>
+            <tr th:each="follow: ${following}">
+                <td>
+                    <a th:href="@{/myReviews/{id}(id=${follow.userId})}" th:text="${follow.name}"></a>
+                </td>
+                <td th:text="${follow.follower_Count}"></td>
+            </tr>
+        </table>
+</span>
+
+<h2>All Users</h2>
 
 <form action="#" th:action="@{/users/jaccard}" th:method="get">
     <button type="submit" >Sort by Jaccard Distance</button>
@@ -25,13 +41,19 @@
         <th>Follow this user?</th>
     </tr>
     <tr th:each="customer: ${customers}">
-        <td>
-            <a th:href="@{/myReviews/{id}(id=${customer.userId})}" th:text="${customer.name}"></a>
-        </td>
-        <td th:text="${customer.follower_Count}"></td>
-        <td>
-            <a th:href="@{/home/follow}" th:text="Follow"></a>
-        </td>
+        <span th:if="${customer.userId != session.loggedInUser.userId}">
+            <td>
+                <a th:href="@{/myReviews/{id}(id=${customer.userId})}" th:text="${customer.name}"></a>
+            </td>
+            <td th:text="${customer.follower_Count}"></td>
+            <td>
+                <!-- Check if the logged-in user is already following this customer -->
+                <span th:if="${!loggedInUser.isFollowing(customer)}">
+                    <a th:href="@{/home/follow(id=${customer.userId})}"
+                       th:text="'Follow'"></a>
+                </span>
+            </td>
+        </span>
     </tr>
 </table>
 </body>

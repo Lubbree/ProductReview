@@ -21,6 +21,8 @@ public class CustomerTest {
         customer = new Customer();
         testCustomer1 = new Customer();
         testCustomer2 = new Customer();
+        testCustomer1.setUserId(1L);
+        testCustomer2.setUserId(2L);
         testReview1 = new Review();
         testReview2 = new Review();
     }

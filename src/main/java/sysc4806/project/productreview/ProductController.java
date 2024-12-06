@@ -1,7 +1,6 @@
 package sysc4806.project.productreview;
 
 import jakarta.servlet.http.HttpSession;
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.DecimalFormat;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
+import static sysc4806.project.productreview.ReviewController.jaccardDistance;
 
 
 @Controller
@@ -19,11 +19,13 @@ public class ProductController {
 
     private final ProductRepository productRepository;
     private final ReviewRepository reviewRepository;
+    private final CustomerRepository customerRepository;
 
     public ProductController(ProductRepository productRepository,
-                             ReviewRepository reviewRepository) {
+                             ReviewRepository reviewRepository, CustomerRepository customerRepository) {
         this.productRepository = productRepository;
         this.reviewRepository = reviewRepository;
+        this.customerRepository = customerRepository;
     }
 
     @GetMapping("/home")
@@ -58,6 +60,37 @@ public class ProductController {
         return "product";
     }
 
+    @GetMapping("/home/product/{id}/jaccard")
+    public String viewProductJaccard(@PathVariable Long id, Model model, HttpSession session) {
+        Optional<Product> rawProduct = productRepository.findById(id);
+        Product product = rawProduct.get();
+        session.setAttribute("currentProduct", product);
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+        model.addAttribute("loggedInUser", loggedInUser);
+
+        double avg = 0;
+        for (Review review : product.getReviews()) {
+            avg += review.getStarRating();
+        }
+
+        DecimalFormat numberFormat = new DecimalFormat("#.#");
+        model.addAttribute("stars", numberFormat.format(avg/product.getReviews().size()));
+        model.addAttribute("product", product);
+        List<Review> reviews = reviewRepository.findByProduct(product);
+        for (Review review : reviews) {
+            review.setJaccard_index(jaccardDistance(loggedInUser, review.getReviewer()));
+        }
+        reviews.sort((r1, r2) -> {
+            double s1 = r1.getJaccard_index() * 100;
+            double s2 = r2.getJaccard_index() * 100;
+            return (int) (s1 - s2);
+        });
+        Collections.reverse(reviews);
+
+        model.addAttribute("reviews", reviews);
+        return "product";
+    }
+
     @GetMapping("home/createAccount")
     public String createAccount(Model model) {
         return "createAccount";
@@ -84,24 +117,14 @@ public class ProductController {
         return "redirect:/home";
     }
 
-//    @PostConstruct
-//    public void init(){
-//        Product product1 = new Product();
-//        product1.setName("JetStream® 3 Piece Hardside Luggage Set");
-//        product1.setCategory("Furniture/Luggage");
-//        product1.setDescription("https://www.walmart.ca/en/ip/jetstream-3-piece-hardside-luggage-set-cream/6000206846841");
-//        productRepository.save(product1);
-//
-//        Product product2 = new Product();
-//        product2.setName("AirPods Pro (2nd generation) with USB-C");
-//        product2.setCategory("Technology");
-//        product2.setDescription("https://www.walmart.ca/en/ip/AirPods-Pro-2nd-generation-with-USB-C/6000206604258");
-//        productRepository.save(product2);
-//
-//        Product product3 = new Product();
-//        product3.setName("Pokémon 24'' Plush - Snorlax");
-//        product3.setCategory("Toys");
-//        product3.setDescription("https://www.walmart.ca/en/ip/pokmon-24-plush-snorlax-bluewhite/6000208095332");
-//        productRepository.save(product3);
-//    }
+    @GetMapping("/home/follow")
+    public String follow(@RequestParam("id") Long id, HttpSession session, Model model) {
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+        Optional<Customer> rawCustomer = customerRepository.findById(id);
+        Customer followedUser = rawCustomer.get();
+        loggedInUser.addFollowing(followedUser);
+
+        model.addAttribute("loggedInUser", loggedInUser);
+        return "redirect:/home";
+    }
 }
